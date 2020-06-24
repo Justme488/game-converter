@@ -7,4 +7,4 @@ ciso and zenity installed, and chdman are required. apt install ciso (zenity ins
 
 rest of readme coming soons
 
-creenshots/gc1.png
+screenshots/gc1.png
