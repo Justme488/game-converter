@@ -791,7 +791,7 @@ restartfunction() {
 zenity --question --text "Do you have more files to convert?"
 if [ "$?" = 0 ]
  then
-  Game-Converter
+  Game-Converter.sh
 else
  exit
 fi
