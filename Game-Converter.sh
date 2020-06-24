@@ -74,7 +74,7 @@ fi
 
 
 ########################################
-# Create a function for $opt1 & $opt3 #
+# Create a function for $opt1 & $$opt3 #
 #####################################################################################################################################################################################################################################
 
 # Create a function for single file conversion to chd
@@ -144,7 +144,7 @@ fi
 
 }
 ########################################
-# Create a function for $opt1 & $opt4 #
+# Create a function for $opt1 & $$opt4 #
 #####################################################################################################################################################################################################################################
 
 # Create a function for single file conversion to chd
@@ -201,7 +201,7 @@ final_single_chdtogdi_save_dir="$single_chdtogdi_output"/"$single_chdtogdi_input
 
 # Starts creating gdi from chd
 
-chdman extractcd -f -i "$single_chdtogdi_input" -o "$final_single_chdtogdi_save_dir" | zenity --progress --auto-kill --pulsate --auto-close --width="500" --title="converting $single_chdtogdi_input_basename_no_ext" --text="Converting $single_chdtogdi_input_basename_no_ext"
+chdman extractcd -f -i "$single_chdtogdi_input" -o "$final_single_chdtogdi_save_dir" | zenity --progress --auto-kill --pulsate --auto-close --width="500" --title="converting $single_chdtogdi_input_basename_no_ext" --text="Converting $single_chdtogdi_input_basename_no_ext to gdi"
   
 
 # Exits if user hits cancel button
@@ -220,7 +220,7 @@ fi
 
 }
 ########################################
-# Create a function for $opt1 & $opt5 #
+# Create a function for $opt1 & $$opt5 #
 ###################restartfunction##################################################################################################################################################################################################################
 
 # Create a function for single coversion from chd to cue
@@ -276,7 +276,7 @@ final_single_chdtocue_save_dir="$single_chdtocue_output"/"$single_chdtocue_input
   
 # Start extracting from chd
   
-chdman extractcd -f -i "$single_chdtocue_input" -o "$final_single_chdtocue_save_dir" | zenity --progress --auto-kill --pulsate --width="400" --auto-close --title "Converting $single_chdtocue_input_basename_no_ext" --text="Converting $single_chdtocue_input_basename_no_ext"
+chdman extractcd -f -i "$single_chdtocue_input" -o "$final_single_chdtocue_save_dir" | zenity --progress --auto-kill --pulsate --width="400" --auto-close --title "Converting $single_chdtocue_input_basename_no_ext" --text="Converting $single_chdtocue_input_basename_no_ext to bin/cue"
 
   
 # Exits if user hits cancel button
@@ -295,7 +295,7 @@ fi
 
 }
 ########################################
-# Create a function for $opt1 & $opt6 #
+# Create a function for $opt1 & $$opt6 #
 #####################################################################################################################################################################################################################################
 
 # Create a function for single iso to cso conversion
@@ -365,7 +365,7 @@ fi
 
 }
 ########################################
-# Create a function for $opt1 & $opt7 #
+# Create a function for $opt1 & $$opt7 #
 #####################################################################################################################################################################################################################################
 
 # Create a function for single cso to iso conversion
@@ -431,7 +431,7 @@ fi
 
 }
 ########################################
-# Create a function for $opt2 & $opt3 #
+# Create a function for $opt2 & $$opt3 #
 #####################################################################################################################################################################################################################################
 
 # Create a function for batch conversion to chd
@@ -498,7 +498,7 @@ fi
 
 }
 ########################################
-# Create a function for $opt2 & $opt4 #
+# Create a function for $opt2 & $$opt4 #
 #####################################################################################################################################################################################################################################
 
 
@@ -572,7 +572,7 @@ fi
 
 }
 ########################################
-# Create a function for $opt2 & $opt5 #
+# Create a function for $opt2 & $$opt5 #
 #####################################################################################################################################################################################################################################
 
 # Create a function for batch Convertion from chd to bin/cue
@@ -645,7 +645,7 @@ fi
 
 }
 ########################################
-# Create a function for $opt2 & $opt6 #
+# Create a function for $opt2 & $$opt6 #
 #####################################################################################################################################################################################################################################
 
 # Create a function for batch iso to cso conversion
@@ -720,7 +720,7 @@ fi
 
 }
 ########################################
-# Create a function for $opt2 & $opt7 #
+# Create a function for $opt2 & $$opt7 #
 #####################################################################################################################################################################################################################################
 
 # Create a function for batch cso to iso conversion
@@ -771,7 +771,7 @@ batch_csotoiso_file_basename_no_ext=${batch_csotoiso_file_basename%.*}
 
 # Start converting to iso
 
-ciso 0 "$batch_csotoiso_file" "$batch_csotoiso_output"/"$batch_csotoiso_file_basename_no_ext.iso" | zenity --progress --auto-kill --pulsate --width="400" --auto-close --title="Converting cso to iso" --text "Creating $batch_csotoiso_input_basename_no_ext.iso"; done
+ciso 0 "$batch_csotoiso_file" "$batch_csotoiso_output"/"$batch_csotoiso_file_basename_no_ext.iso" | zenity --progress --auto-kill --pulsate --width="400" --auto-close --title="Converting cso to iso" --text "Creating $batch_csotoiso_file_basename_no_ext.iso"; done
 
 
 # Exits if user hits cancel button
