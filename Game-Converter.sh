@@ -221,7 +221,7 @@ fi
 }
 ########################################
 # Create a function for $opt1 & $$opt5 #
-#####################################################################################################################################################################################################################################
+###################restartfunction##################################################################################################################################################################################################################
 
 # Create a function for single coversion from chd to cue
 
@@ -264,7 +264,7 @@ if [ "$?" != 0 ]
 fi
 
 
-# Create a directory for the files to be extracted in
+# Create a directoryrestartfunction for the files to be extracted in
 
 mkdir "$single_chdtocue_output"/"$single_chdtocue_input_basename_no_ext"
 
@@ -349,7 +349,7 @@ fi
 
 # Starts converting to cso
 
-ciso "$action3" "$single_isotocso_input" "$single_isotocso_input_basename_no_ext.cso" | zenity --progress --auto-kill --pulsate --width="400" --auto-close --title="Converting $single_isotocso_input_basename_no_ext" --text "Creating $single_isotocso_input_basename_no_ext.cso"
+ciso "$action3" "$single_isotocso_input" "$single_isotocso_output"/"$single_isotocso_input_basename_no_ext.cso" | zenity --progress --auto-kill --pulsate --width="400" --auto-close --title="Converting $single_isotocso_input_basename_no_ext" --text "Creating $single_isotocso_input_basename_no_ext.cso"
   
 # Exits if user hits cancel button
 
@@ -782,6 +782,21 @@ if [ "$?" != 0 ]
 fi
 
 }
+################################
+# Create a function to restart #
+#####################################################################################################################################################################################################################################
+
+restartfunction() {
+
+zenity --question --text "Do you have more files to convert?"
+if [ "$?" = 0 ]
+ then
+  Game-Converter
+else
+ exit
+fi
+
+}
 ########  
 # Main #
 #####################################################################################################################################################################################################################################
@@ -845,7 +860,10 @@ elif [ "$action1" = "$opt2" ] && [ "$action2" = "$opt6" ]
 elif [ "$action1" = "$opt2" ] && [ "$action2" = "$opt7" ]
  then
   batch_csotoiso
-fi    
+fi
+
+restartfunction
+    
 
 exit
 ###########################################################################################################################################################################################
