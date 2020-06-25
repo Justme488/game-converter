@@ -1,8 +1,11 @@
 # game-converter
 Shell script GUI single or batch game format converter that uses zenity
 
-ciso and zenity installed, and chdman are required. apt install ciso (zenity installed by default on some distros. ubuntu/mint/debian)
+Required files:
 
+* ciso (If you don't already have it - apt install ciso)
+* zenity (Installed by default on some distros. ubuntu/mint/debian)
+* chdman4 & chdman5 (version 4 & 5 - Both included)
 
 ![Screenshot](https://github.com/Justme488/game-converter/blob/master/screenshots/gc1.png)
 
