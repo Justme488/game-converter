@@ -40,6 +40,10 @@ opt15="8"
 opt16="9"
 opt17="10 (slow, high compression)"
 
+# Define chdman version variables
+opt_chdman4="chdman version 4 (0.145)"
+opt_chdman5="chdman version 5 (0.221)"
+
 #####################################################################################################################################################################################################################################
 
 # Opens box asking for user input, and sets variable $action1 to $opt1 or $opt2 from user selection
@@ -64,6 +68,7 @@ fi
 
 # Create a function for single file conversion to chd
 single_tochd () {
+  
   # Asks the user for input file, and creates $single_tochd_input
   single_tochd_input=$(zenity --file-selection --title="Select a file to convert to chd - Must be cue, gdi, or toc")
 
@@ -80,25 +85,35 @@ single_tochd () {
 
   # Continue to select file output directory if valid filetype (cue,gdi,toc) creating variable "$single_tochd_output", and run the rest, or go to "else" in function
   if [[ $single_tochd_input_basename == *.cue ]] || [[ $single_tochd_input_basename == *.gdi ]] || [[ $single_tochd_input_basename == *.toc ]]; then
-    single_tochd_output=$(zenity --file-selection  --directory --title="Select where you want to save it")
+    
+    # Opens box asking which version of chdman, and sets variable "$chdman_ver" to "$chdman4" or "$chdman5"
+    chdman_ver=$(zenity --list --height="200" --width="350" --title="Which version of chdman do you want to use?" --text="Which version of chdman?" --radiolist  --column="Pick" --column="chd version" FALSE "$opt_chdman4" FALSE "$opt_chdman5")
 
-    # Exits if user hits cancel button
-    if [ "$?" != 0 ]; then
-      exit
-    fi
+      # exits if user hits cancel button
+      if [ "$?" != 0 ]; then
+        exit
+      fi
 
+      single_tochd_output=$(zenity --file-selection  --directory --title="Select where you want to save it")
+
+        # Exits if user hits cancel button
+        if [ "$?" != 0 ]; then
+          exit
+        fi
+
+    # Create final output path variable "$final_single_tochd_save_dir"
     final_single_tochd_save_dir="$single_tochd_output"/"$single_tochd_input_basename_no_ext.chd"
 
     # Starts creating chd if folder is selected
-    chdman createcd -f -i "$single_tochd_input" -o "$final_single_tochd_save_dir" | zenity --progress --pulsate --auto-kill --width="500"  --auto-close --title="Converting $single_tochd_input_basename_no_ext to chd" --text="Creating $single_tochd_input_basename_no_ext.chd"
-
-    # Exits if user hits cancel button
-    if [ "$?" != 0 ]; then
-      exit
+    if [ "$chdman_ver" = "$opt_chdman4" ]; then
+    chdman4 -createcd "$single_tochd_input" "$final_single_tochd_save_dir" | zenity --progress --pulsate --auto-kill --width="500"  --auto-close --title="Converting $single_tochd_input_basename_no_ext to chd" --text="Creating $single_tochd_input_basename_no_ext.chd"
+    elif [ "$chdman_ver" = "$opt_chdman5" ]; then
+    chdman5 createcd -f -i "$single_tochd_input" -o "$final_single_tochd_save_dir" | zenity --progress --pulsate --auto-kill --width="500"  --auto-close --title="Converting $single_tochd_input_basename_no_ext to chd" --text="Creating $single_tochd_input_basename_no_ext.chd"
     fi
+
   else
     # error pop up box if not valid filetype, and start over
-    zenity --error --width=400 --height=200 --title="That file is not a chd file. Please try again." --text="$single_tochd_input_basename is not a cue, gdi, or toc file. Try again." && single_tochd
+    zenity --error --width=400 --height=200 --title="That file is not a cue, gdi, or toc file. Please try again." --text="$single_tochd_input_basename is not a cue, gdi, or toc file. Try again." && single_tochd
   fi
 }
 
@@ -292,18 +307,26 @@ batch_tochd () {
   # Asks the user for input folder, and creates "$batch_tochd_input"
   batch_tochd_input=$(zenity --file-selection --directory --title="Select your main folder to convert to chd")
 
-  # Exits if user hits cancel button
-  if [ "$?" != 0 ]; then
-    exit
-  fi
+    # Exits if user hits cancel button
+    if [ "$?" != 0 ]; then
+      exit
+    fi
+
+  # Opens box asking which version of chdman, and sets variable "$chdman_ver" to "$chdman4" or "$chdman5"
+  chdman_ver=$(zenity --list --height="200" --width="350" --title="Which version of chdman do you want to use?" --text="Which version of chdman?" --radiolist  --column="Pick" --column="chd version" FALSE "$opt_chdman4" FALSE "$opt_chdman5")
+
+    # exits if user hits cancel button
+    if [ "$?" != 0 ]; then
+      exit
+    fi
 
   # Asks the user for output folder, and creates "$batch_tochd_output"
   batch_tochd_output=$(zenity --file-selection --directory --title="Where do you want to save them?")
 
-  # Exits if user hits cancel button
-  if [ "$?" != 0 ]; then
-    exit
-  fi
+    # Exits if user hits cancel button
+    if [ "$?" != 0 ]; then
+      exit
+    fi
 
   # Loop through games folder recursively looking for cue, gdi, and toc files
   for batch_tochd_file in "$batch_tochd_input"/*/*.{cue,gdi,toc}; do
@@ -316,14 +339,14 @@ batch_tochd () {
     # Create a smaller output path "$final_batch_tochd_output". (output path = output folder selected / input file basename with no extension) and adds .chd
     final_batch_tochd_output="$batch_tochd_output"/"$batch_tochd_file_basename_no_ext.chd"
 
-    # Start converting to chd
-    chdman createcd -f -i "$batch_tochd_file" -o "$final_batch_tochd_output" | zenity --progress --pulsate --auto-kill --auto-close --title="Converting files to chd" --text="Converting $batch_tochd_file_basename_no_ext to chd"
+    # Starts creating chd if folder is selected
+    if [ "$chdman_ver" = "$opt_chdman4" ]; then
+    chdman4 -createcd "$batch_tochd_file" "$final_batch_tochd_output" | zenity --progress --pulsate --auto-kill --width="500"  --auto-close --title="Converting $batch_tochd_file_basename_no_ext to chd" --text="Creating $batch_tochd_file_basename_no_ext.chd"
+    elif [ "$chdman_ver" = "$opt_chdman5" ]; then
+    chdman5 createcd -f -i "$batch_tochd_file" -o "$final_batch_tochd_output" | zenity --progress --pulsate --auto-kill --width="500"  --auto-close --title="Converting $batch_tochd_file_basename_no_ext to chd" --text="Creating $batch_tochd_file_basename_no_ext.chd"
+    fi
   done
 
-  # Exits if user hits cancel button
-  if [ "$?" != 0 ]; then
-    exit
-  fi
 }
 #######################################
 # Create a function for $opt2 & $opt4 #
