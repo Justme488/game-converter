@@ -1,5 +1,5 @@
 # game-converter
-Shell script GUI single or batch game format converter that uses zenity
+Shell script GUI single or batch game format converter for chdman and ciso that uses zenity
 
 Required files:
 
