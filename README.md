@@ -16,3 +16,9 @@ Required files:
 ![Screenshot](https://github.com/Justme488/game-converter/blob/master/screenshots/gc4.png)
 
 ![Screenshot](https://github.com/Justme488/game-converter/blob/master/screenshots/gc5.png)
+
+![Screenshot](https://github.com/Justme488/game-converter/blob/master/screenshots/gc6.png)
+
+![Screenshot](https://github.com/Justme488/game-converter/blob/master/screenshots/gc7.png)
+
+![Screenshot](https://github.com/Justme488/game-converter/blob/master/screenshots/gc8.png)
