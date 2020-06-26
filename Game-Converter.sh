@@ -11,7 +11,7 @@
 ##################################
 
 ######################################################################################
-# In order to use this, you must have Zenity, chdman,  ciso installed on your system #
+# In order to use this, you must have Zenity and ciso installed on your system       #
 ######################################################################################
 
 
@@ -45,6 +45,8 @@ opt_chdman4="chdman version 4 (0.145)"
 opt_chdman5="chdman version 5 (0.221)"
 
 #####################################################################################################################################################################################################################################
+# See if ciso is installed
+ciso_exist
 
 # Opens box asking for user input, and sets variable $action1 to $opt1 or $opt2 from user selection
 action1=$(zenity --list --title="What kind of conversion?" --text="What kind of conversion?" --radiolist  --column="Pick" --column="Conversion Type" FALSE "$opt1" FALSE "$opt2")
@@ -526,6 +528,21 @@ batch_csotoiso() {
   if [ "$?" != 0 ]; then
     exit
   fi
+}
+
+#################################################
+# Create a function to see if ciso is installed #
+#####################################################################################################################################################################################################################################
+
+ciso_exist () {
+
+# see if ciso is installed
+ciso=$(which ciso)
+if [ -z "${ciso}" ]; then
+
+  # Give warning if ciso isn't installed
+  zenity --info --width="400" --text="cso or iso conversion will not work without ciso installed"
+fi
 }
 
 ########  
