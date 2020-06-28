@@ -45,8 +45,6 @@ opt_chdman4="chdman version 4 (0.145)"
 opt_chdman5="chdman version 5 (0.221)"
 
 #####################################################################################################################################################################################################################################
-# See if ciso is installed
-ciso_exist
 
 # Opens box asking for user input, and sets variable $action1 to $opt1 or $opt2 from user selection
 action1=$(zenity --list --title="What kind of conversion?" --text="What kind of conversion?" --radiolist  --column="Pick" --column="Conversion Type" FALSE "$opt1" FALSE "$opt2")
@@ -548,6 +546,8 @@ fi
 ########  
 # Main #
 #####################################################################################################################################################################################################################################
+# Call function to see if ciso is installed
+ciso_exist
 
 # If user selected "Single File Conversion", and " Convert to chd"
 if [ "$action1" = "$opt1" ] && [ "$action2" = "$opt3" ]; then
