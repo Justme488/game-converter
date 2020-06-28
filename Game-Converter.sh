@@ -10,9 +10,9 @@
 #                                #
 ##################################
 
-######################################################################################
-# In order to use this, you must have Zenity and ciso installed on your system       #
-######################################################################################
+########################################################################################################
+# In order to use this, you must have ciso, libsdl1.2debian, and zenity installed on your system       #
+########################################################################################################
 
 
 #############
@@ -70,7 +70,7 @@ fi
 single_tochd () {
   
   # Asks the user for input file, and creates $single_tochd_input
-  single_tochd_input=$(zenity --file-selection --title="Select a file to convert to chd - Must be cue, gdi, or toc")
+  single_tochd_input=$(zenity --file-selection --filename="Desktop" --title="Select a file to convert to chd - Must be cue, gdi, or toc")
 
   # Exits if user hits cancel button
   if [ "$?" != 0 ]; then
@@ -94,7 +94,7 @@ single_tochd () {
         exit
       fi
 
-      single_tochd_output=$(zenity --file-selection  --directory --title="Select where you want to save it")
+      single_tochd_output=$(zenity --file-selection --directory --filename="Desktop" --title="Select where you want to save it")
 
         # Exits if user hits cancel button
         if [ "$?" != 0 ]; then
@@ -124,7 +124,7 @@ single_tochd () {
 # Create a function for single file conversion to chd
 single_chdtogdi () {
   # Asks the user for input file, and creates $single_chdtogdi_input
-  single_chdtogdi_input=$(zenity --file-selection --title="Select chd file to convert to gdi")
+  single_chdtogdi_input=$(zenity --file-selection --filename="Desktop" --title="Select chd file to convert to gdi")
 
   # Exits if user hits cancel button
   if [ "$?" != 0 ]; then
@@ -139,7 +139,7 @@ single_chdtogdi () {
 
   # Continue to select file output directory if valid filetype (chd) creating "single_chdtogdi_output" and run the rest, or go to "else" in function 
   if [[ $single_chdtogdi_input_basename == *.chd ]]; then 
-    single_chdtogdi_output=$(zenity --file-selection  --directory --title="Where do you want to save it? Folder will be created automatically.")
+    single_chdtogdi_output=$(zenity --file-selection --directory --filename="Desktop" --title="Where do you want to save it? Folder will be created automatically.")
   
     # Exits if user hits cancel button
     if [ "$?" != 0 ]; then
@@ -172,7 +172,7 @@ single_chdtogdi () {
 # Create a function for single coversion from chd to cue
 single_chdtocue () {
   # Asks the user for input file, creates "$single_chdtocue_input"
-  single_chdtocue_input=$(zenity --file-selection --title="Select chd to convert")
+  single_chdtocue_input=$(zenity --file-selection --filename="Desktop" --title="Select chd to convert")
 
   # Exits if user hits cancel button
   if [ "$?" != 0 ]; then
@@ -187,7 +187,7 @@ single_chdtocue () {
 
   # Continue to select file output directory if valid filetype (chd) creating "$single_chdtocue_output" and run the rest, or go to "else" in function 
   if [[ $single_chdtocue_input_basename == *.chd ]]; then
-    single_chdtocue_output=$(zenity --file-selection  --directory --title="Where do you want to save it? Folder will be created automatically.")
+    single_chdtocue_output=$(zenity --file-selection  --directory --filename="Desktop" --title="Where do you want to save it? Folder will be created automatically.")
 
     if [ "$?" != 0 ]; then
       exit
@@ -220,7 +220,7 @@ single_chdtocue () {
 # Create a function for single iso to cso conversion
 single_isotocso () {
   # Asks the user for input file, and creates "$single_isotocso_input"
-  single_isotocso_input=$(zenity --file-selection --title="Select iso file to convert")
+  single_isotocso_input=$(zenity --file-selection --filename="Desktop" --title="Select iso file to convert")
 
   # Exits if user hits cancel button
   if [ "$?" != 0 ]; then
@@ -235,7 +235,7 @@ single_isotocso () {
     
   if [[ $single_isotocso_input_basename == *.iso ]]; then
     # Ask user for file output folder, and creates "$single_isotocso_output"
-    single_isotocso_output=$(zenity --file-selection  --directory --title="Where do you want to save it?")
+    single_isotocso_output=$(zenity --file-selection  --directory --filename="Desktop" --title="Where do you want to save it?")
 
     # Opens box asking for compression level, and sets "$action1" to "$opt8" - "$opt17" from user selection
     action3=$(zenity --list --width="300" --height="400" --title="What compression level?" --text="Select compression level" --radiolist  --column="Pick" --column="Compression Level" FALSE "$opt8" FALSE "$opt9" FALSE "$opt10" FALSE "$opt11" FALSE "$opt12" FALSE "$opt13" FALSE "$opt14" FALSE "$opt15" FALSE "$opt16" FALSE "$opt17")
@@ -264,7 +264,7 @@ single_isotocso () {
 # Create a function for single cso to iso conversion
 single_csotoiso () {
   # Asks the user for input file, and creates "$single_csotoiso_input"
-  single_csotoiso_input=$(zenity --file-selection --title="Select cso file to convert")
+  single_csotoiso_input=$(zenity --file-selection --filename="Desktop" --title="Select cso file to convert")
 
   # Exits if user hits cancel button
   if [ "$?" != 0 ]; then
@@ -279,7 +279,7 @@ single_csotoiso () {
     
   if [[ $single_csotoiso_input_basename == *.cso ]]; then
     # Ask user for file output folder, and creates "$single_csotoiso_output"
-    single_csotoiso_output=$(zenity --file-selection  --directory --title="Where do you want to save it?")
+    single_csotoiso_output=$(zenity --file-selection --directory --filename="Desktop" --title="Where do you want to save it?")
 
     # Exits if user hits cancel button
     if [ "$?" != 0 ]; then
@@ -305,7 +305,7 @@ single_csotoiso () {
 # Create a function for batch conversion to chd
 batch_tochd () {
   # Asks the user for input folder, and creates "$batch_tochd_input"
-  batch_tochd_input=$(zenity --file-selection --directory --title="Select your main folder to convert to chd")
+  batch_tochd_input=$(zenity --file-selection --directory --filename="Desktop" --title="Select your main folder to convert to chd")
 
     # Exits if user hits cancel button
     if [ "$?" != 0 ]; then
@@ -321,7 +321,7 @@ batch_tochd () {
     fi
 
   # Asks the user for output folder, and creates "$batch_tochd_output"
-  batch_tochd_output=$(zenity --file-selection --directory --title="Where do you want to save them?")
+  batch_tochd_output=$(zenity --file-selection --filename="Desktop" --directory --title="Where do you want to save them?")
 
     # Exits if user hits cancel button
     if [ "$?" != 0 ]; then
@@ -355,7 +355,7 @@ batch_tochd () {
 # Create a function for batch Convertion from chd to gdi
 batch_chdtogdi() {
   # Asks the user for input folder, and creates "$batch_tochd_input"
-  batch_chdtogdi_input=$(zenity --file-selection --directory --title="Select the folder where you keep your chd files")
+  batch_chdtogdi_input=$(zenity --file-selection --directory --filename="Desktop" --title="Select the folder where you keep your chd files")
 
   # Exits if user hits cancel button
   if [ "$?" != 0 ]; then
@@ -363,7 +363,7 @@ batch_chdtogdi() {
   fi
 
   # Asks the user for output folder, and creates "$batch_tochd_output"
-  batch_chdtogdi_output=$(zenity --file-selection --directory --title="Where you want to save all of these folders?")
+  batch_chdtogdi_output=$(zenity --file-selection --directory --filename="Desktop" --title="Where you want to save all of these folders?")
 
   # Exits if user hits cancel button
   if [ "$?" != 0 ]; then
@@ -401,7 +401,7 @@ batch_chdtogdi() {
 # Create a function for batch Convertion from chd to bin/cue
 batch_chdtocue() {
   # Asks the user for input folder, and creates "$batch_chdtocue_input"
-  batch_chdtocue_input=$(zenity --file-selection --directory --title="Select the folder where you keep your chd files")
+  batch_chdtocue_input=$(zenity --file-selection --directory --filename="Desktop" --title="Select the folder where you keep your chd files")
 
   # Exits if user hits cancel button
   if [ "$?" != 0 ]; then
@@ -409,7 +409,7 @@ batch_chdtocue() {
   fi
 
   # Asks the user for output folder, and creates "$batch_chdtocue_output"
-  batch_chdtocue_output=$(zenity --file-selection --directory --title="Where you want to save all of these folders?")
+  batch_chdtocue_output=$(zenity --file-selection --directory --filename="Desktop" --title="Where you want to save all of these folders?")
 
   # Exits if user hits cancel button
   if [ "$?" != 0 ]; then
@@ -447,7 +447,7 @@ batch_chdtocue() {
 # Create a function for batch iso to cso conversion
 batch_isotocso() {
   # Asks the user for input folder, and creates "$batch_isotocso_input"
-  batch_isotocso_input=$(zenity --file-selection --directory --title="Select the folder where you keep your iso files")
+  batch_isotocso_input=$(zenity --file-selection --directory --filename="Desktop" --title="Select the folder where you keep your iso files")
 
   # Exits if user hits cancel button
   if [ "$?" != 0 ]; then
@@ -455,7 +455,7 @@ batch_isotocso() {
   fi
 
   # Asks the user for output folder, and creates "$batch_isotocso_output"
-  batch_isotocso_output=$(zenity --file-selection --directory --title="Where do you want to save them?")
+  batch_isotocso_output=$(zenity --file-selection --directory --filename="Desktop" --title="Where do you want to save them?")
 
   # Exits if user hits cancel button
   if [ "$?" != 0 ]; then
@@ -495,7 +495,7 @@ batch_isotocso() {
 # Create a function for batch cso to iso conversion
 batch_csotoiso() {
   # Asks the user for input folder, and creates "$batch_csotoiso_input"
-  batch_csotoiso_input=$(zenity --file-selection --directory --title="Select the folder where you keep your cso files")
+  batch_csotoiso_input=$(zenity --file-selection --directory --filename="Desktop" --title="Select the folder where you keep your cso files")
 
   # Exits if user hits cancel button
   if [ "$?" != 0 ]; then
@@ -503,7 +503,7 @@ batch_csotoiso() {
   fi
 
   # Asks the user for output folder, and creates "$batch_csotoiso_output"
-  batch_csotoiso_output=$(zenity --file-selection --directory --title="Where you want to save them")
+  batch_csotoiso_output=$(zenity --file-selection --directory --filename="Desktop" --title="Where you want to save them")
 
   # Exits if user hits cancel button
   if [ "$?" != 0 ]; then
@@ -528,26 +528,27 @@ batch_csotoiso() {
   fi
 }
 
-#################################################
-# Create a function to see if ciso is installed #
-#####################################################################################################################################################################################################################################
-
-ciso_exist () {
-
-# see if ciso is installed
-ciso=$(which ciso)
-if [ -z "${ciso}" ]; then
-
-  # Give warning if ciso isn't installed
-  zenity --info --width="400" --text="cso or iso conversion will not work without ciso installed"
-fi
-}
-
 ########  
 # Main #
 #####################################################################################################################################################################################################################################
-# Call function to see if ciso is installed
-ciso_exist
+
+# Opens box asking for user input, and sets variable $action1 to $opt1 or $opt2 from user selection
+action1=$(zenity --list --title="What kind of conversion?" --text="What kind of conversion?" --radiolist  --column="Pick" --column="Conversion Type" FALSE "$opt1" FALSE "$opt2")
+
+# Exits if user hits cancel button
+if [ "$?" != 0 ]; then
+  exit
+fi
+
+# Opens box asking for user input, and sets variable $action2 to $opt3,$opt4,$opt5,$opt6, or $opt7 from user selection
+action2=$(zenity --list --height="300" --width="350" --title="How do you want to convert?" --text="How do you want to convert?" --radiolist  --column="Pick" --column="Conversion Type" FALSE "$opt3" FALSE "$opt4" FALSE "$opt5" FALSE "$opt6" FALSE "$opt7")
+
+#exits if user hits cancel button
+if [ "$?" != 0 ]; then
+  exit
+fi
+
+
 
 # If user selected "Single File Conversion", and " Convert to chd"
 if [ "$action1" = "$opt1" ] && [ "$action2" = "$opt3" ]; then
