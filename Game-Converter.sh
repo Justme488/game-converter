@@ -10,9 +10,9 @@
 #                                #
 ##################################
 
-########################################################################################################
-# In order to use this, you must have ciso, libsdl1.2debian, and zenity installed on your system       #
-########################################################################################################
+##################################################################################################
+# In order to use this, you must have ciso, libsdl1.2debian, and zenity installed on your system #
+##################################################################################################
 
 
 #############
@@ -346,8 +346,8 @@ batch_tochd () {
     chdman5 createcd -f -i "$batch_tochd_file" -o "$final_batch_tochd_output" | zenity --progress --pulsate --auto-kill --width="500"  --auto-close --title="Converting $batch_tochd_file_basename_no_ext to chd" --text="Creating $batch_tochd_file_basename_no_ext.chd"
     fi
   done
-
 }
+
 #######################################
 # Create a function for $opt2 & $opt4 #
 #####################################################################################################################################################################################################################################
