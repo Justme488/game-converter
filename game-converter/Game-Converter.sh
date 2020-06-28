@@ -44,24 +44,6 @@ opt17="10 (slow, high compression)"
 opt_chdman4="chdman version 4 (0.145)"
 opt_chdman5="chdman version 5 (0.221)"
 
-#####################################################################################################################################################################################################################################
-
-# Opens box asking for user input, and sets variable $action1 to $opt1 or $opt2 from user selection
-action1=$(zenity --list --title="What kind of conversion?" --text="What kind of conversion?" --radiolist  --column="Pick" --column="Conversion Type" FALSE "$opt1" FALSE "$opt2")
-
-# Exits if user hits cancel button
-if [ "$?" != 0 ]; then
-  exit
-fi
-
-# Opens box asking for user input, and sets variable $action2 to $opt3,$opt4,$opt5,$opt6, or $opt7 from user selection
-action2=$(zenity --list --height="300" --width="350" --title="How do you want to convert?" --text="How do you want to convert?" --radiolist  --column="Pick" --column="Conversion Type" FALSE "$opt3" FALSE "$opt4" FALSE "$opt5" FALSE "$opt6" FALSE "$opt7")
-
-#exits if user hits cancel button
-if [ "$?" != 0 ]; then
-  exit
-fi
-
 #######################################
 # Create a function for $opt1 & $opt3 #
 #####################################################################################################################################################################################################################################
