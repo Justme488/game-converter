@@ -6,6 +6,7 @@ Required files:
 * ciso (If you don't already have it - apt install ciso)
 * zenity (Installed by default on some distros. ubuntu/mint/debian)
 * chdman4 & chdman5 (version 4 & 5 - Both included)
+* libsdl1.2debian (apt installlibsdl1.2debian)
 
 ![Screenshot](https://github.com/Justme488/game-converter/blob/master/screenshots/gc1.png)
 
