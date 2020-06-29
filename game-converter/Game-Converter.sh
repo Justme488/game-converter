@@ -135,7 +135,7 @@ single_chdtogdi () {
     final_single_chdtogdi_save_dir="$single_chdtogdi_output"/"$single_chdtogdi_input_basename_no_ext"/"$single_chdtogdi_input_basename_no_ext.gdi"
 
     # Starts creating gdi from chd
-    chdman extractcd -f -i "$single_chdtogdi_input" -o "$final_single_chdtogdi_save_dir" | zenity --progress --auto-kill --pulsate --auto-close --width="500" --title="converting $single_chdtogdi_input_basename_no_ext" --text="Converting $single_chdtogdi_input_basename_no_ext to gdi"
+    chdman5 extractcd -f -i "$single_chdtogdi_input" -o "$final_single_chdtogdi_save_dir" | zenity --progress --auto-kill --pulsate --auto-close --width="500" --title="converting $single_chdtogdi_input_basename_no_ext" --text="Converting $single_chdtogdi_input_basename_no_ext to gdi"
 
     # Exits if user hits cancel button
     if [ "$?" != 0 ]; then
@@ -182,7 +182,7 @@ single_chdtocue () {
     final_single_chdtocue_save_dir="$single_chdtocue_output"/"$single_chdtocue_input_basename_no_ext"/"$single_chdtocue_input_basename_no_ext.cue"
 
     # Start extracting from chd
-    chdman extractcd -f -i "$single_chdtocue_input" -o "$final_single_chdtocue_save_dir" | zenity --progress --auto-kill --pulsate --width="400" --auto-close --title "Converting $single_chdtocue_input_basename_no_ext" --text="Converting $single_chdtocue_input_basename_no_ext to bin/cue"
+    chdman5 extractcd -f -i "$single_chdtocue_input" -o "$final_single_chdtocue_save_dir" | zenity --progress --auto-kill --pulsate --width="400" --auto-close --title "Converting $single_chdtocue_input_basename_no_ext" --text="Converting $single_chdtocue_input_basename_no_ext to bin/cue"
 
     # Exits if user hits cancel button
     if [ "$?" != 0 ]; then
@@ -367,7 +367,7 @@ batch_chdtogdi() {
     mkdir "$batch_chdtogdi_output"/"$batch_chdtogdi_file_basename_no_ext"
 
     # Start converting to gdi
-    chdman extractcd -f -i "$batch_chdtogdi_file" -o "$final_batch_chdtogdi_output" | zenity --progress --pulsate --auto-kill --auto-close --title="converting chd files to gdi" --text="Converting $batch_chdtogdi_file_basename_no_ext to gdi"
+    chdman5 extractcd -f -i "$batch_chdtogdi_file" -o "$final_batch_chdtogdi_output" | zenity --progress --pulsate --auto-kill --auto-close --title="converting chd files to gdi" --text="Converting $batch_chdtogdi_file_basename_no_ext to gdi"
   done
 
   # Exits if user hits cancel button
@@ -413,7 +413,7 @@ batch_chdtocue() {
     mkdir "$batch_chdtocue_output"/"$batch_chdtocue_file_basename_no_ext"
 
     # Start converting to bin/cue
-    chdman extractcd -f -i "$batch_chdtocue_file" -o "$final_batch_chdtocue_output" | zenity --progress --pulsate --auto-kill --auto-close --title="converting chd files to bin/cue" --text="Converting $batch_chdtocue_file_basename_no_ext to bin/cue"
+    chdman5 extractcd -f -i "$batch_chdtocue_file" -o "$final_batch_chdtocue_output" | zenity --progress --pulsate --auto-kill --auto-close --title="converting chd files to bin/cue" --text="Converting $batch_chdtocue_file_basename_no_ext to bin/cue"
   done
 
   # Exits if user hits cancel button
