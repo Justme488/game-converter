@@ -37,8 +37,7 @@ opt12="5"
 opt13="6"
 opt14="7"
 opt15="8"
-opt16="9"
-opt17="10 (slow, high compression)"
+opt16="9 (slow, high compression)"
 
 # Define chdman version variables
 opt_chdman4="chdman version 4 (0.145)"
@@ -220,7 +219,7 @@ single_isotocso () {
     single_isotocso_output=$(zenity --file-selection  --directory --filename="Desktop" --title="Where do you want to save it?")
 
     # Opens box asking for compression level, and sets "$action1" to "$opt8" - "$opt17" from user selection
-    action3=$(zenity --list --width="300" --height="400" --title="What compression level?" --text="Select compression level" --radiolist  --column="Pick" --column="Compression Level" FALSE "$opt8" FALSE "$opt9" FALSE "$opt10" FALSE "$opt11" FALSE "$opt12" FALSE "$opt13" FALSE "$opt14" FALSE "$opt15" FALSE "$opt16" FALSE "$opt17")
+    action3=$(zenity --list --width="300" --height="400" --title="What compression level?" --text="Select compression level" --radiolist  --column="Pick" --column="Compression Level" FALSE "$opt8" FALSE "$opt9" FALSE "$opt10" FALSE "$opt11" FALSE "$opt12" FALSE "$opt13" FALSE "$opt14" FALSE "$opt15" TRUE "$opt16")
 
     # Exits if user hits cancel button
     if [ "$?" != 0 ]; then
@@ -445,7 +444,7 @@ batch_isotocso() {
   fi
 
   # Opens box asking for compression level, and sets "$action4" to "$opt8" - "$opt17" from user selection
-  action4=$(zenity --list --width="300" --height="400" --title="What compression level?" --text="Select compression level" --radiolist  --column="Pick" --column="Compression Level" FALSE "$opt8" FALSE "$opt9" FALSE "$opt10" FALSE "$opt11" FALSE "$opt12" FALSE "$opt13" FALSE "$opt14" FALSE "$opt15" FALSE "$opt16" FALSE "$opt17")
+  action4=$(zenity --list --width="300" --height="400" --title="What compression level?" --text="Select compression level" --radiolist  --column="Pick" --column="Compression Level" FALSE "$opt8" FALSE "$opt9" FALSE "$opt10" FALSE "$opt11" FALSE "$opt12" FALSE "$opt13" FALSE "$opt14" FALSE "$opt15" TRUE "$opt16")
 
   # Exits if user hits cancel button
   if [ "$?" != 0 ]; then
