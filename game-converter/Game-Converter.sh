@@ -85,13 +85,18 @@ single_tochd () {
     # Create final output path variable "$final_single_tochd_save_dir"
     final_single_tochd_save_dir="$single_tochd_output"/"$single_tochd_input_basename_no_ext.chd"
 
-    # Starts creating chd if folder is selected
-    if [ "$chdman_ver" = "$opt_chdman4" ]; then
-    chdman4 -createcd "$single_tochd_input" "$final_single_tochd_save_dir" | zenity --progress --pulsate --auto-kill --width="500"  --auto-close --title="Converting $single_tochd_input_basename_no_ext to chd" --text="Creating $single_tochd_input_basename_no_ext.chd"
-    elif [ "$chdman_ver" = "$opt_chdman5" ]; then
-    chdman5 createcd -f -i "$single_tochd_input" -o "$final_single_tochd_save_dir" | zenity --progress --pulsate --auto-kill --width="500"  --auto-close --title="Converting $single_tochd_input_basename_no_ext to chd" --text="Creating $single_tochd_input_basename_no_ext.chd"
-    fi
+    # Don't overwrite if file exists
+    if [ ! -f "$single_tochd_output"/"$single_tochd_input_basename_no_ext.chd" ]; then
 
+      # Starts creating chd if folder is selected
+      if [ "$chdman_ver" = "$opt_chdman4" ]; then
+        chdman4 -createcd "$single_tochd_input" "$final_single_tochd_save_dir" | zenity --progress --pulsate --auto-kill --width="500"  --auto-close --title="Converting $single_tochd_input_basename_no_ext to chd" --text="Creating $single_tochd_input_basename_no_ext.chd"
+      elif [ "$chdman_ver" = "$opt_chdman5" ]; then
+        chdman5 createcd -i "$single_tochd_input" -o "$final_single_tochd_save_dir" | zenity --progress --pulsate --auto-kill --width="500"  --auto-close --title="Converting $single_tochd_input_basename_no_ext to chd" --text="Creating $single_tochd_input_basename_no_ext.chd"
+      fi
+    else
+      zenity --error --width="300" --title="File already exists!" --text="$single_tochd_input_basename_no_ext.chd already exists!"
+    fi
   else
     # error pop up box if not valid filetype, and start over
     zenity --error --width=400 --height=200 --title="That file is not a cue, gdi, or toc file. Please try again." --text="$single_tochd_input_basename is not a cue, gdi, or toc file. Try again." && single_tochd
@@ -133,13 +138,17 @@ single_chdtogdi () {
     # Create final output path variable
     final_single_chdtogdi_save_dir="$single_chdtogdi_output"/"$single_chdtogdi_input_basename_no_ext"/"$single_chdtogdi_input_basename_no_ext.gdi"
 
-    # Starts creating gdi from chd
-    chdman5 extractcd -f -i "$single_chdtogdi_input" -o "$final_single_chdtogdi_save_dir" | zenity --progress --auto-kill --pulsate --auto-close --width="500" --title="converting $single_chdtogdi_input_basename_no_ext" --text="Converting $single_chdtogdi_input_basename_no_ext to gdi"
+    # Don't overwrite if folder exists
+    if [ ! -f "$final_single_chdtogdi_save_dir" ]; then
 
-    # Exits if user hits cancel button
-    if [ "$?" != 0 ]; then
-      exit
+    # Starts creating gdi from chd
+    chdman5 extractcd -i "$single_chdtogdi_input" -o "$final_single_chdtogdi_save_dir" | zenity --progress --auto-kill --pulsate --auto-close --width="500" --title="converting $single_chdtogdi_input_basename_no_ext" --text="Converting $single_chdtogdi_input_basename_no_ext to gdi"
+
+      # Exits if user hits cancel button
+      if [ "$?" != 0 ]; then
+        exit
     fi
+      fi
   else 
     # error pop up box if not valid filetype, and then start over function
     zenity --error --width=400 --height=200 --text="That file is not a chd file. Please try again." && single_chdtogdi
@@ -180,13 +189,17 @@ single_chdtocue () {
     # Set final output path
     final_single_chdtocue_save_dir="$single_chdtocue_output"/"$single_chdtocue_input_basename_no_ext"/"$single_chdtocue_input_basename_no_ext.cue"
 
-    # Start extracting from chd
-    chdman5 extractcd -f -i "$single_chdtocue_input" -o "$final_single_chdtocue_save_dir" | zenity --progress --auto-kill --pulsate --width="400" --auto-close --title "Converting $single_chdtocue_input_basename_no_ext" --text="Converting $single_chdtocue_input_basename_no_ext to bin/cue"
+    # Don't overwrite if folder exists
+    if [ ! -f "$final_single_chdtocue_save_dir" ]; then
 
-    # Exits if user hits cancel button
-    if [ "$?" != 0 ]; then
-      exit
-    fi
+    # Start extracting from chd
+    chdman5 extractcd -i "$single_chdtocue_input" -o "$final_single_chdtocue_save_dir" | zenity --progress --auto-kill --pulsate --width="400" --auto-close --title="Converting $single_chdtocue_input_basename_no_ext" --text="Converting $single_chdtocue_input_basename_no_ext to bin/cue"
+
+   fi  
+      # Exits if user hits cancel button
+      if [ "$?" != 0 ]; then
+        exit
+      fi
   else
     # error pop up box if not valid filetype, and then start over function
     zenity --error --width=400 --height=200 --text="That file is not a chd file. Please try again." && single_chdtocue
@@ -226,9 +239,12 @@ single_isotocso () {
       exit
     fi
 
-    # Starts converting to cso
-    ciso "$action3" "$single_isotocso_input" "$single_isotocso_output"/"$single_isotocso_input_basename_no_ext.cso" | zenity --progress --auto-kill --pulsate --width="400" --auto-close --title="Converting $single_isotocso_input_basename_no_ext" --text "Creating $single_isotocso_input_basename_no_ext.cso"
-      
+    # Don't overwrite if file exists
+    if [ ! -f "$single_isotocso_output"/"$single_isotocso_input_basename_no_ext.cso" ]; then
+
+      # Starts converting to cso
+      ciso "$action3" "$single_isotocso_input" "$single_isotocso_output"/"$single_isotocso_input_basename_no_ext.cso" | zenity --progress --auto-kill --pulsate --width="400" --auto-close --title="Converting $single_isotocso_input_basename_no_ext" --text="Creating $single_isotocso_input_basename_no_ext.cso"
+    fi  
     # Exits if user hits cancel button
     if [ "$?" != 0 ]; then
       exit
@@ -267,9 +283,13 @@ single_csotoiso () {
       exit
     fi
 
-    # Start uncompressing .cso
-    ciso 0 "$single_csotoiso_input" "$single_csotoiso_output"/"$single_csotoiso_input_basename_no_ext.iso" | zenity --progress --auto-kill --pulsate --auto-close --title "Converting $single_csotoiso_input_basename_no_ext" --text "creating $single_csotoiso_input_basename_no_ext.iso"
-      
+    # Don't overwrite if file exists
+    if [ ! -f "$single_csotoiso_output"/"$single_csotoiso_input_basename_no_ext.iso" ]; then
+
+      # Start uncompressing .cso
+      ciso 0 "$single_csotoiso_input" "$single_csotoiso_output"/"$single_csotoiso_input_basename_no_ext.iso" | zenity --progress --auto-kill --pulsate --auto-close --title="Converting $single_csotoiso_input_basename_no_ext" --text="creating $single_csotoiso_input_basename_no_ext.iso"
+    fi  
+
     # Exits if user hits cancel button
     if [ "$?" != 0 ]; then
       exit
@@ -320,11 +340,15 @@ batch_tochd () {
     # Create a smaller output path "$final_batch_tochd_output". (output path = output folder selected / input file basename with no extension) and adds .chd
     final_batch_tochd_output="$batch_tochd_output"/"$batch_tochd_file_basename_no_ext.chd"
 
-    # Starts creating chd if folder is selected
-    if [ "$chdman_ver" = "$opt_chdman4" ]; then
-    chdman4 -createcd "$batch_tochd_file" "$final_batch_tochd_output" | zenity --progress --pulsate --auto-kill --width="500"  --auto-close --title="Converting $batch_tochd_file_basename_no_ext to chd" --text="Creating $batch_tochd_file_basename_no_ext.chd"
-    elif [ "$chdman_ver" = "$opt_chdman5" ]; then
-    chdman5 createcd -f -i "$batch_tochd_file" -o "$final_batch_tochd_output" | zenity --progress --pulsate --auto-kill --width="500"  --auto-close --title="Converting $batch_tochd_file_basename_no_ext to chd" --text="Creating $batch_tochd_file_basename_no_ext.chd"
+    # Don't overwrite if file exists
+    if [ ! -f "$batch_tochd_output"/"$batch_tochd_file_basename_no_ext.chd" ]; then
+
+      # Starts creating chd if folder is selected
+      if [ "$chdman_ver" = "$opt_chdman4" ]; then
+        chdman4 -createcd "$batch_tochd_file" "$final_batch_tochd_output" | zenity --progress --pulsate --auto-kill --width="500"  --auto-close --title="Converting $batch_tochd_file_basename_no_ext to chd" --text="Creating               $batch_tochd_file_basename_no_ext.chd"
+      elif [ "$chdman_ver" = "$opt_chdman5" ]; then
+        chdman5 createcd -i "$batch_tochd_file" -o "$final_batch_tochd_output" | zenity --progress --pulsate --auto-kill --width="500"  --auto-close --title="Converting $batch_tochd_file_basename_no_ext to chd" --text="Creating $batch_tochd_file_basename_no_ext.chd"
+      fi
     fi
   done
 }
@@ -365,8 +389,12 @@ batch_chdtogdi() {
     # Create a directory so all files have their own folder
     mkdir "$batch_chdtogdi_output"/"$batch_chdtogdi_file_basename_no_ext"
 
+    # Don't overwrite if folder exists
+    if [ ! -f "$final_batch_chdtogdi_output" ]; then
+
     # Start converting to gdi
-    chdman5 extractcd -f -i "$batch_chdtogdi_file" -o "$final_batch_chdtogdi_output" | zenity --progress --pulsate --auto-kill --auto-close --title="converting chd files to gdi" --text="Converting $batch_chdtogdi_file_basename_no_ext to gdi"
+    chdman5 extractcd -i "$batch_chdtogdi_file" -o "$final_batch_chdtogdi_output" | zenity --progress --pulsate --auto-kill --auto-close --title="converting chd files to gdi" --text="Converting $batch_chdtogdi_file_basename_no_ext to gdi"
+    fi
   done
 
   # Exits if user hits cancel button
@@ -408,11 +436,15 @@ batch_chdtocue() {
     # Create a smaller output path "$final_batch_chdtocue_output". (output path = output folder selected / input file basename with no extension / input file basename with no extension)
     final_batch_chdtocue_output="$batch_chdtocue_output"/"$batch_chdtocue_file_basename_no_ext"/"$batch_chdtocue_file_basename_no_ext.cue"
 
-    # Create a directory so all files have their own folder
-    mkdir "$batch_chdtocue_output"/"$batch_chdtocue_file_basename_no_ext"
+    # Don't overwrite if folder exists
+    if [ ! -f "$final_batch_chdtocue_output" ]; then
 
-    # Start converting to bin/cue
-    chdman5 extractcd -f -i "$batch_chdtocue_file" -o "$final_batch_chdtocue_output" | zenity --progress --pulsate --auto-kill --auto-close --title="converting chd files to bin/cue" --text="Converting $batch_chdtocue_file_basename_no_ext to bin/cue"
+      # Create a directory so all files have their own folder
+      mkdir "$batch_chdtocue_output"/"$batch_chdtocue_file_basename_no_ext"
+
+      # Start converting to bin/cue
+      chdman5 extractcd -i "$batch_chdtocue_file" -o "$final_batch_chdtocue_output" | zenity --progress --pulsate --auto-kill --auto-close --title="converting chd files to bin/cue" --text="Converting $batch_chdtocue_file_basename_no_ext to bin/cue"
+    fi
   done
 
   # Exits if user hits cancel button
@@ -459,8 +491,12 @@ batch_isotocso() {
     # Takes the basename "batch_isotocso_file_basename", and removes extension (.iso) creating "$batch_isotocso_file_basename_no_ext" (filename)
     batch_isotocso_file_basename_no_ext=${batch_isotocso_file_basename%.*}
 
-    # Start converting to cso
-    ciso "$action4" "$batch_isotocso_file" "$batch_isotocso_output"/"$batch_isotocso_file_basename_no_ext.cso" | zenity --progress --auto-kill --pulsate --width="400" --auto-close --title="Converting iso to cso" --text "Creating $batch_isotocso_file_basename_no_ext.cso"
+    # Don't overwrite if file exists
+    if [ ! -f "$batch_isotocso_output"/"$batch_isotocso_file_basename_no_ext.cso" ]; then
+
+      # Start converting to cso
+      ciso "$action4" "$batch_isotocso_file" "$batch_isotocso_output"/"$batch_isotocso_file_basename_no_ext.cso" | zenity --progress --auto-kill --pulsate --width="400" --auto-close --title="Converting iso to cso" --text="Creating $batch_isotocso_file_basename_no_ext.cso"
+    fi
   done
 
   # Exits if user hits cancel button
@@ -499,8 +535,12 @@ batch_csotoiso() {
     # Takes the basename "batch_csotoiso_file_basename", and removes extension (.cso) creating "$batch_csotoiso_file_basename_no_ext" (filename)
     batch_csotoiso_file_basename_no_ext=${batch_csotoiso_file_basename%.*}
 
-    # Start converting to iso
-    ciso 0 "$batch_csotoiso_file" "$batch_csotoiso_output"/"$batch_csotoiso_file_basename_no_ext.iso" | zenity --progress --auto-kill --pulsate --width="400" --auto-close --title="Converting cso to iso" --text "Creating $batch_csotoiso_file_basename_no_ext.iso"
+    # Don't overwrite if file exists
+    if [ ! -f "$batch_csotoiso_output"/"$batch_csotoiso_file_basename_no_ext.iso" ]; then
+
+      # Start converting to iso
+      ciso 0 "$batch_csotoiso_file" "$batch_csotoiso_output"/"$batch_csotoiso_file_basename_no_ext.iso" | zenity --progress --auto-kill --pulsate --width="400" --auto-close --title="Converting cso to iso" --text="Creating $batch_csotoiso_file_basename_no_ext.iso"
+    fi
   done
 
   # Exits if user hits cancel button
