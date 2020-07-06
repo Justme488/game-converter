@@ -3,3 +3,6 @@
 ### [Wiki](https://github.com/Justme488/game-converter/wiki)
 
 ### [Screenshots](https://github.com/Justme488/game-converter/wiki/Screenshots)
+</br>
+</br>
+Pull requests are always welcome.
