@@ -54,7 +54,7 @@ single_tochd () {
   single_tochd_input=$(zenity --file-selection --filename="Desktop" --title="Select a file to convert to chd - Must be cue, gdi, or toc")
 
   # Exits if user hits cancel button
-  if [ "$?" != 0 ]; then
+  if [[ "$?" != 0 ]]; then
     exit
   fi
 
@@ -71,14 +71,14 @@ single_tochd () {
     chdman_ver=$(zenity --list --height="200" --width="350" --title="Which version of chdman do you want to use?" --text="Which version of chdman?" --radiolist  --column="Pick" --column="chd version" FALSE "$opt_chdman4" FALSE "$opt_chdman5")
 
       # exits if user hits cancel button
-      if [ "$?" != 0 ]; then
+      if [[ "$?" != 0 ]]; then
         exit
       fi
 
       single_tochd_output=$(zenity --file-selection --directory --filename="Desktop" --title="Select where you want to save it")
 
         # Exits if user hits cancel button
-        if [ "$?" != 0 ]; then
+        if [[ "$?" != 0 ]]; then
           exit
         fi
 
@@ -86,12 +86,12 @@ single_tochd () {
     final_single_tochd_save_dir="$single_tochd_output"/"$single_tochd_input_basename_no_ext.chd"
 
     # Don't overwrite if file exists
-    if [ ! -f "$single_tochd_output"/"$single_tochd_input_basename_no_ext.chd" ]; then
+    if [[ ! -f "$single_tochd_output"/"$single_tochd_input_basename_no_ext.chd" ]]; then
 
       # Starts creating chd if folder is selected
-      if [ "$chdman_ver" = "$opt_chdman4" ]; then
+      if [[ "$chdman_ver" == "$opt_chdman4" ]]; then
         chdman4 -createcd "$single_tochd_input" "$final_single_tochd_save_dir" | zenity --progress --pulsate --auto-kill --width="500"  --auto-close --title="Converting $single_tochd_input_basename_no_ext to chd" --text="Creating $single_tochd_input_basename_no_ext.chd"
-      elif [ "$chdman_ver" = "$opt_chdman5" ]; then
+      elif [[ "$chdman_ver" == "$opt_chdman5" ]]; then
         chdman5 createcd -i "$single_tochd_input" -o "$final_single_tochd_save_dir" | zenity --progress --pulsate --auto-kill --width="500"  --auto-close --title="Converting $single_tochd_input_basename_no_ext to chd" --text="Creating $single_tochd_input_basename_no_ext.chd"
       fi
     else
@@ -113,7 +113,7 @@ single_chdtogdi () {
   single_chdtogdi_input=$(zenity --file-selection --filename="Desktop" --title="Select chd file to convert to gdi")
 
   # Exits if user hits cancel button
-  if [ "$?" != 0 ]; then
+  if [[ "$?" != 0 ]]; then
     exit
   fi
 
@@ -128,7 +128,7 @@ single_chdtogdi () {
     single_chdtogdi_output=$(zenity --file-selection --directory --filename="Desktop" --title="Where do you want to save it? Folder will be created automatically.")
   
     # Exits if user hits cancel button
-    if [ "$?" != 0 ]; then
+    if [[ "$?" != 0 ]]; then
       exit
     fi
 
@@ -139,13 +139,13 @@ single_chdtogdi () {
     final_single_chdtogdi_save_dir="$single_chdtogdi_output"/"$single_chdtogdi_input_basename_no_ext"/"$single_chdtogdi_input_basename_no_ext.gdi"
 
     # Don't overwrite if folder exists
-    if [ ! -f "$final_single_chdtogdi_save_dir" ]; then
+    if [[ ! -f "$final_single_chdtogdi_save_dir" ]]; then
 
     # Starts creating gdi from chd
     chdman5 extractcd -i "$single_chdtogdi_input" -o "$final_single_chdtogdi_save_dir" | zenity --progress --auto-kill --pulsate --auto-close --width="500" --title="converting $single_chdtogdi_input_basename_no_ext" --text="Converting $single_chdtogdi_input_basename_no_ext to gdi"
 
       # Exits if user hits cancel button
-      if [ "$?" != 0 ]; then
+      if [[ "$?" != 0 ]]; then
         exit
     fi
       fi
@@ -165,7 +165,7 @@ single_chdtocue () {
   single_chdtocue_input=$(zenity --file-selection --filename="Desktop" --title="Select chd to convert")
 
   # Exits if user hits cancel button
-  if [ "$?" != 0 ]; then
+  if [[ "$?" != 0 ]]; then
     exit
   fi
 
@@ -179,7 +179,7 @@ single_chdtocue () {
   if [[ $single_chdtocue_input_basename == *.chd ]]; then
     single_chdtocue_output=$(zenity --file-selection  --directory --filename="Desktop" --title="Where do you want to save it? Folder will be created automatically.")
 
-    if [ "$?" != 0 ]; then
+    if [[ "$?" != 0 ]]; then
       exit
     fi
 
@@ -190,14 +190,14 @@ single_chdtocue () {
     final_single_chdtocue_save_dir="$single_chdtocue_output"/"$single_chdtocue_input_basename_no_ext"/"$single_chdtocue_input_basename_no_ext.cue"
 
     # Don't overwrite if folder exists
-    if [ ! -f "$final_single_chdtocue_save_dir" ]; then
+    if [[ ! -f "$final_single_chdtocue_save_dir" ]]; then
 
     # Start extracting from chd
     chdman5 extractcd -i "$single_chdtocue_input" -o "$final_single_chdtocue_save_dir" | zenity --progress --auto-kill --pulsate --width="400" --auto-close --title="Converting $single_chdtocue_input_basename_no_ext" --text="Converting $single_chdtocue_input_basename_no_ext to bin/cue"
 
    fi  
       # Exits if user hits cancel button
-      if [ "$?" != 0 ]; then
+      if [[ "$?" != 0 ]]; then
         exit
       fi
   else
@@ -217,7 +217,7 @@ single_isotocso () {
   single_isotocso_input=$(zenity --file-selection --filename="Desktop" --title="Select iso file to convert")
 
   # Exits if user hits cancel button
-  if [ "$?" != 0 ]; then
+  if [[ "$?" != 0 ]]; then
     exit
   fi
 
@@ -235,18 +235,18 @@ single_isotocso () {
     action3=$(zenity --list --width="300" --height="400" --title="What compression level?" --text="Select compression level" --radiolist  --column="Pick" --column="Compression Level" FALSE "$opt8" FALSE "$opt9" FALSE "$opt10" FALSE "$opt11" FALSE "$opt12" FALSE "$opt13" FALSE "$opt14" FALSE "$opt15" TRUE "$opt16")
 
     # Exits if user hits cancel button
-    if [ "$?" != 0 ]; then
+    if [[ "$?" != 0 ]]; then
       exit
     fi
 
     # Don't overwrite if file exists
-    if [ ! -f "$single_isotocso_output"/"$single_isotocso_input_basename_no_ext.cso" ]; then
+    if [[ ! -f "$single_isotocso_output"/"$single_isotocso_input_basename_no_ext.cso" ]]; then
 
       # Starts converting to cso
       ciso "$action3" "$single_isotocso_input" "$single_isotocso_output"/"$single_isotocso_input_basename_no_ext.cso" | zenity --progress --auto-kill --pulsate --width="400" --auto-close --title="Converting $single_isotocso_input_basename_no_ext" --text="Creating $single_isotocso_input_basename_no_ext.cso"
     fi  
     # Exits if user hits cancel button
-    if [ "$?" != 0 ]; then
+    if [[ "$?" != 0 ]]; then
       exit
     fi
   else 
@@ -264,7 +264,7 @@ single_csotoiso () {
   single_csotoiso_input=$(zenity --file-selection --filename="Desktop" --title="Select cso file to convert")
 
   # Exits if user hits cancel button
-  if [ "$?" != 0 ]; then
+  if [[ "$?" != 0 ]]; then
     exit
   fi
 
@@ -279,19 +279,19 @@ single_csotoiso () {
     single_csotoiso_output=$(zenity --file-selection --directory --filename="Desktop" --title="Where do you want to save it?")
 
     # Exits if user hits cancel button
-    if [ "$?" != 0 ]; then
+    if [[ "$?" != 0 ]]; then
       exit
     fi
 
     # Don't overwrite if file exists
-    if [ ! -f "$single_csotoiso_output"/"$single_csotoiso_input_basename_no_ext.iso" ]; then
+    if [[ ! -f "$single_csotoiso_output"/"$single_csotoiso_input_basename_no_ext.iso" ]]; then
 
       # Start uncompressing .cso
       ciso 0 "$single_csotoiso_input" "$single_csotoiso_output"/"$single_csotoiso_input_basename_no_ext.iso" | zenity --progress --auto-kill --pulsate --auto-close --title="Converting $single_csotoiso_input_basename_no_ext" --text="creating $single_csotoiso_input_basename_no_ext.iso"
     fi  
 
     # Exits if user hits cancel button
-    if [ "$?" != 0 ]; then
+    if [[ "$?" != 0 ]]; then
       exit
     fi
   else 
@@ -309,7 +309,7 @@ batch_tochd () {
   batch_tochd_input=$(zenity --file-selection --directory --filename="Desktop" --title="Select your main folder to convert to chd")
 
     # Exits if user hits cancel button
-    if [ "$?" != 0 ]; then
+    if [[ "$?" != 0 ]]; then
       exit
     fi
 
@@ -317,7 +317,7 @@ batch_tochd () {
   chdman_ver=$(zenity --list --height="200" --width="350" --title="Which version of chdman do you want to use?" --text="Which version of chdman?" --radiolist  --column="Pick" --column="chd version" FALSE "$opt_chdman4" FALSE "$opt_chdman5")
 
     # exits if user hits cancel button
-    if [ "$?" != 0 ]; then
+    if [[ "$?" != 0 ]]; then
       exit
     fi
 
@@ -325,7 +325,7 @@ batch_tochd () {
   batch_tochd_output=$(zenity --file-selection --filename="Desktop" --directory --title="Where do you want to save them?")
 
     # Exits if user hits cancel button
-    if [ "$?" != 0 ]; then
+    if [[ "$?" != 0 ]]; then
       exit
     fi
 
@@ -341,12 +341,12 @@ batch_tochd () {
     final_batch_tochd_output="$batch_tochd_output"/"$batch_tochd_file_basename_no_ext.chd"
 
     # Don't overwrite if file exists
-    if [ ! -f "$batch_tochd_output"/"$batch_tochd_file_basename_no_ext.chd" ]; then
+    if [[ ! -f "$batch_tochd_output"/"$batch_tochd_file_basename_no_ext.chd" ]]; then
 
       # Starts creating chd if folder is selected
-      if [ "$chdman_ver" = "$opt_chdman4" ]; then
+      if [[ "$chdman_ver" == "$opt_chdman4" ]]; then
         chdman4 -createcd "$batch_tochd_file" "$final_batch_tochd_output" | zenity --progress --pulsate --auto-kill --width="500"  --auto-close --title="Converting $batch_tochd_file_basename_no_ext to chd" --text="Creating               $batch_tochd_file_basename_no_ext.chd"
-      elif [ "$chdman_ver" = "$opt_chdman5" ]; then
+      elif [[ "$chdman_ver" == "$opt_chdman5" ]]; then
         chdman5 createcd -i "$batch_tochd_file" -o "$final_batch_tochd_output" | zenity --progress --pulsate --auto-kill --width="500"  --auto-close --title="Converting $batch_tochd_file_basename_no_ext to chd" --text="Creating $batch_tochd_file_basename_no_ext.chd"
       fi
     fi
@@ -363,7 +363,7 @@ batch_chdtogdi() {
   batch_chdtogdi_input=$(zenity --file-selection --directory --filename="Desktop" --title="Select the folder where you keep your chd files")
 
   # Exits if user hits cancel button
-  if [ "$?" != 0 ]; then
+  if [[ "$?" != 0 ]]; then
     exit
   fi
 
@@ -371,7 +371,7 @@ batch_chdtogdi() {
   batch_chdtogdi_output=$(zenity --file-selection --directory --filename="Desktop" --title="Where you want to save all of these folders?")
 
   # Exits if user hits cancel button
-  if [ "$?" != 0 ]; then
+  if [[ "$?" != 0 ]]; then
     exit
   fi
 
@@ -390,7 +390,7 @@ batch_chdtogdi() {
     mkdir "$batch_chdtogdi_output"/"$batch_chdtogdi_file_basename_no_ext"
 
     # Don't overwrite if folder exists
-    if [ ! -f "$final_batch_chdtogdi_output" ]; then
+    if [[ ! -f "$final_batch_chdtogdi_output" ]]; then
 
     # Start converting to gdi
     chdman5 extractcd -i "$batch_chdtogdi_file" -o "$final_batch_chdtogdi_output" | zenity --progress --pulsate --auto-kill --auto-close --title="converting chd files to gdi" --text="Converting $batch_chdtogdi_file_basename_no_ext to gdi"
@@ -398,7 +398,7 @@ batch_chdtogdi() {
   done
 
   # Exits if user hits cancel button
-  if [ "$?" != 0 ]; then
+  if [[ "$?" != 0 ]]; then
     exit
   fi
 }
@@ -413,7 +413,7 @@ batch_chdtocue() {
   batch_chdtocue_input=$(zenity --file-selection --directory --filename="Desktop" --title="Select the folder where you keep your chd files")
 
   # Exits if user hits cancel button
-  if [ "$?" != 0 ]; then
+  if [[ "$?" != 0 ]]; then
     exit
   fi
 
@@ -421,7 +421,7 @@ batch_chdtocue() {
   batch_chdtocue_output=$(zenity --file-selection --directory --filename="Desktop" --title="Where you want to save all of these folders?")
 
   # Exits if user hits cancel button
-  if [ "$?" != 0 ]; then
+  if [[ "$?" != 0 ]]; then
     exit
   fi
 
@@ -437,7 +437,7 @@ batch_chdtocue() {
     final_batch_chdtocue_output="$batch_chdtocue_output"/"$batch_chdtocue_file_basename_no_ext"/"$batch_chdtocue_file_basename_no_ext.cue"
 
     # Don't overwrite if folder exists
-    if [ ! -f "$final_batch_chdtocue_output" ]; then
+    if [[ ! -f "$final_batch_chdtocue_output" ]]; then
 
       # Create a directory so all files have their own folder
       mkdir "$batch_chdtocue_output"/"$batch_chdtocue_file_basename_no_ext"
@@ -448,7 +448,7 @@ batch_chdtocue() {
   done
 
   # Exits if user hits cancel button
-  if [ "$?" != 0 ]; then
+  if [[ "$?" != 0 ]]; then
     exit
   fi
 }
@@ -463,7 +463,7 @@ batch_isotocso() {
   batch_isotocso_input=$(zenity --file-selection --directory --filename="Desktop" --title="Select the folder where you keep your iso files")
 
   # Exits if user hits cancel button
-  if [ "$?" != 0 ]; then
+  if [[ "$?" != 0 ]]; then
     exit
   fi
 
@@ -471,7 +471,7 @@ batch_isotocso() {
   batch_isotocso_output=$(zenity --file-selection --directory --filename="Desktop" --title="Where do you want to save them?")
 
   # Exits if user hits cancel button
-  if [ "$?" != 0 ]; then
+  if [[ "$?" != 0 ]]; then
     exit
   fi
 
@@ -479,7 +479,7 @@ batch_isotocso() {
   action4=$(zenity --list --width="300" --height="400" --title="What compression level?" --text="Select compression level" --radiolist  --column="Pick" --column="Compression Level" FALSE "$opt8" FALSE "$opt9" FALSE "$opt10" FALSE "$opt11" FALSE "$opt12" FALSE "$opt13" FALSE "$opt14" FALSE "$opt15" TRUE "$opt16")
 
   # Exits if user hits cancel button
-  if [ "$?" != 0 ]; then
+  if [[ "$?" != 0 ]]; then
     exit
   fi
 
@@ -492,7 +492,7 @@ batch_isotocso() {
     batch_isotocso_file_basename_no_ext=${batch_isotocso_file_basename%.*}
 
     # Don't overwrite if file exists
-    if [ ! -f "$batch_isotocso_output"/"$batch_isotocso_file_basename_no_ext.cso" ]; then
+    if [[ ! -f "$batch_isotocso_output"/"$batch_isotocso_file_basename_no_ext.cso" ]]; then
 
       # Start converting to cso
       ciso "$action4" "$batch_isotocso_file" "$batch_isotocso_output"/"$batch_isotocso_file_basename_no_ext.cso" | zenity --progress --auto-kill --pulsate --width="400" --auto-close --title="Converting iso to cso" --text="Creating $batch_isotocso_file_basename_no_ext.cso"
@@ -500,7 +500,7 @@ batch_isotocso() {
   done
 
   # Exits if user hits cancel button
-  if [ "$?" != 0 ]; then
+  if [[ "$?" != 0 ]]; then
     exit
   fi
 }
@@ -515,7 +515,7 @@ batch_csotoiso() {
   batch_csotoiso_input=$(zenity --file-selection --directory --filename="Desktop" --title="Select the folder where you keep your cso files")
 
   # Exits if user hits cancel button
-  if [ "$?" != 0 ]; then
+  if [[ "$?" != 0 ]]; then
     exit
   fi
 
@@ -523,7 +523,7 @@ batch_csotoiso() {
   batch_csotoiso_output=$(zenity --file-selection --directory --filename="Desktop" --title="Where you want to save them")
 
   # Exits if user hits cancel button
-  if [ "$?" != 0 ]; then
+  if [[ "$?" != 0 ]]; then
     exit
   fi
 
@@ -536,7 +536,7 @@ batch_csotoiso() {
     batch_csotoiso_file_basename_no_ext=${batch_csotoiso_file_basename%.*}
 
     # Don't overwrite if file exists
-    if [ ! -f "$batch_csotoiso_output"/"$batch_csotoiso_file_basename_no_ext.iso" ]; then
+    if [[ ! -f "$batch_csotoiso_output"/"$batch_csotoiso_file_basename_no_ext.iso" ]]; then
 
       # Start converting to iso
       ciso 0 "$batch_csotoiso_file" "$batch_csotoiso_output"/"$batch_csotoiso_file_basename_no_ext.iso" | zenity --progress --auto-kill --pulsate --width="400" --auto-close --title="Converting cso to iso" --text="Creating $batch_csotoiso_file_basename_no_ext.iso"
@@ -544,7 +544,7 @@ batch_csotoiso() {
   done
 
   # Exits if user hits cancel button
-  if [ "$?" != 0 ]; then
+  if [[ "$?" != 0 ]]; then
     exit
   fi
 }
@@ -557,7 +557,7 @@ batch_csotoiso() {
 action1=$(zenity --list --title="What kind of conversion?" --text="What kind of conversion?" --radiolist  --column="Pick" --column="Conversion Type" FALSE "$opt1" FALSE "$opt2")
 
 # Exits if user hits cancel button
-if [ "$?" != 0 ]; then
+if [[ "$?" != 0 ]]; then
   exit
 fi
 
@@ -565,50 +565,50 @@ fi
 action2=$(zenity --list --height="300" --width="350" --title="How do you want to convert?" --text="How do you want to convert?" --radiolist  --column="Pick" --column="Conversion Type" FALSE "$opt3" FALSE "$opt4" FALSE "$opt5" FALSE "$opt6" FALSE "$opt7")
 
 #exits if user hits cancel button
-if [ "$?" != 0 ]; then
+if [[ "$?" != 0 ]]; then
   exit
 fi
 
 
 
 # If user selected "Single File Conversion", and " Convert to chd"
-if [ "$action1" = "$opt1" ] && [ "$action2" = "$opt3" ]; then
+if [[ "$action1" == "$opt1" ]] && [[ "$action2" == "$opt3" ]]; then
   single_tochd
 
 # If user selected "Single File Conversion", and "Convert chd to gdi"
-elif [ "$action1" = "$opt1" ] && [ "$action2" = "$opt4" ]; then
+elif [[ "$action1" == "$opt1" ]] && [[ "$action2" == "$opt4" ]]; then
   single_chdtogdi
 
 # If user selected "Single File Conversion", and "Convert chd to bin/cue""
-elif [ "$action1" = "$opt1" ] && [ "$action2" = "$opt5" ]; then
+elif [[ "$action1" == "$opt1" ]] && [[ "$action2" == "$opt5" ]]; then
   single_chdtocue
 
 # If user selected "Single File Conversion", and "Convert iso to cso"
-elif [ "$action1" = "$opt1" ] && [ "$action2" = "$opt6" ]; then
+elif [[ "$action1" == "$opt1" ]] && [[ "$action2" == "$opt6" ]]; then
   single_isotocso
 
 # If user selected "Single File Conversion", and "Convert iso to cso"
-elif [ "$action1" = "$opt1" ] && [ "$action2" = "$opt7" ]; then
+elif [[ "$action1" == "$opt1" ]] && [[ "$action2" == "$opt7" ]]; then
   single_csotoiso
 
 # If user selected "batch Conversion", and " Convert to chd"
-elif [ "$action1" = "$opt2" ] && [ "$action2" = "$opt3" ]; then
+elif [[ "$action1" == "$opt2" ]] && [[ "$action2" == "$opt3" ]]; then
   batch_tochd
 
 # If user selected "batch Conversion", and "Convert chd to gdi"
-elif [ "$action1" = "$opt2" ] && [ "$action2" = "$opt4" ]; then
+elif [[ "$action1" == "$opt2" ]] && [[ "$action2" == "$opt4" ]]; then
   batch_chdtogdi
 
 # If user selected "batch Conversion", and "Convert chd to bin/cue""
-elif [ "$action1" = "$opt2" ] && [ "$action2" = "$opt5" ]; then
+elif [[ "$action1" == "$opt2" ]] && [[ "$action2" == "$opt5" ]]; then
   batch_chdtocue
 
 # If user selected "batch Conversion", and "Convert iso to cso"
-elif [ "$action1" = "$opt2" ] && [ "$action2" = "$opt6" ]; then
+elif [[ "$action1" == "$opt2" ]] && [[ "$action2" == "$opt6" ]]; then
   batch_isotocso
 
 # If user selected "batch Conversion", and "Convert cso to iso"
-elif [ "$action1" = "$opt2" ] && [ "$action2" = "$opt7" ]; then
+elif [[ "$action1" == "$opt2" ]] && [[ "$action2" == "$opt7" ]]; then
   batch_csotoiso
 fi
 
