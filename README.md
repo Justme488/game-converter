@@ -1,6 +1,6 @@
 ## Shell script GUI single or batch game format converter for chdman and ciso.
 ### Features:
-* single or batch convert cue,gdi, or toc to chd (option of chdman v4 or v5)
+* single or batch convert cue, gdi, or toc to chd (option of chdman v4 or v5)
 * Single or batch convert chd to gdi/bin/raw (creates gamename folder)
 * Single or batch convert chd to bin/cue (creates gamename folder)
 * Single or batch convert iso to cso (with compression options)
