@@ -11,6 +11,8 @@
 ### [Wiki](https://github.com/Justme488/game-converter/wiki)
 
 ### [Screenshots](https://github.com/Justme488/game-converter/wiki/Screenshots)
+
+### [deb file structure](https://github.com/Justme488/game-converter/wiki/deb-file-structure)
 </br>
 </br>
 Pull requests are always welcome.
