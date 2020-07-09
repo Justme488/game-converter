@@ -151,7 +151,7 @@ single_chdtogdi () {
 
         # Cancel conversion, and delete incomplete file if cancel is pressed.
           if [[ "$?" != 0 ]]; then
-            rm "$final_single_chdtogdi_output"
+            rm -r "$final_single_chdtogdi_output"
             pkill chdman5
           fi
     else
