@@ -81,7 +81,7 @@ single_tochd () {
 
       # If chdman4 was selected, start creating chd
       if [[ "$chdman_ver" == "$opt_chdman4" ]]; then
-        (chdman4 -createcd "$single_tochd_input" "$final_single_tochd_output" | zenity --progress --pulsate --auto-kill --width="500"  --auto-close --title="Converting $single_tochd_input_basename_no_ext to chd" --text="Creating: $single_tochd_input_basename_no_ext.chd")
+        (chdman4 -createcd "$single_tochd_input" "$final_single_tochd_output" | zenity --progress --pulsate --auto-kill --width="500"  --auto-close --title="Converting $single_tochd_input_basename_no_ext" --text="Creating: $single_tochd_input_basename_no_ext.chd")
 
         # Cancel conversion, and delete incomplete file if cancel is pressed.
         if [[ "$?" != 0 ]]; then
@@ -91,7 +91,7 @@ single_tochd () {
 
       # If chdman5 was selected, start creating chd
       elif [[ "$chdman_ver" == "$opt_chdman5" ]]; then
-        (chdman5 createcd -i "$single_tochd_input" -o "$final_single_tochd_output" | zenity --progress --pulsate --auto-kill --width="500"  --auto-close --title="Converting $single_tochd_input_basename_no_ext to chd" --text="Creating: $single_tochd_input_basename_no_ext.chd")
+        (chdman5 createcd -i "$single_tochd_input" -o "$final_single_tochd_output" | zenity --progress --pulsate --auto-kill --width="500"  --auto-close --title="Converting $single_tochd_input_basename_no_ext" --text="Creating: $single_tochd_input_basename_no_ext.chd")
 
        # Cancel conversion, and delete incomplete file if cancel is pressed.
         if [[ "$?" != 0 ]]; then
