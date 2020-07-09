@@ -113,7 +113,7 @@ single_tochd () {
     fi
   else
     # Error pop up box if not valid filetype, and start over
-    zenity --error --width=400 --height=200 --title="That file is not a cue, gdi, or toc file. Please try again." --text="$single_tochd_input_basename is not a cue, gdi, or toc file. Try again." && single_tochd
+    zenity --error --width="500" --height="200" --title="That file is not a cue, gdi, or toc file. Please try again." --text="$single_tochd_input_basename is not a cue, gdi, or toc file. Try again." && single_tochd
   fi
 }
 #######################################
@@ -154,7 +154,7 @@ single_chdtogdi () {
       final_single_chdtogdi_output="$single_chdtogdi_output"/"$single_chdtogdi_input_basename_no_ext"/"$single_chdtogdi_input_basename_no_ext.gdi"
 
       # Starts creating gdi from chd
-      chdman5 extractcd -i "$single_chdtogdi_input" -o "$final_single_chdtogdi_output" | zenity --progress --auto-kill --pulsate --auto-close --width="500" --title="converting $single_chdtogdi_input_basename_no_ext" --text="Creating: $single_chdtogdi_input_basename_no_ext.gdi"
+      (chdman5 extractcd -i "$single_chdtogdi_input" -o "$final_single_chdtogdi_output" | zenity --progress --auto-kill --pulsate --auto-close --width="500" --title="converting $single_chdtogdi_input_basename_no_ext" --text="Creating: $single_chdtogdi_input_basename_no_ext.gdi")
 
         # Cancel conversion, and delete incomplete file if cancel is pressed.
           if [[ "$?" != 0 ]]; then
@@ -167,7 +167,7 @@ single_chdtogdi () {
     fi
   else 
     # error pop up box if not valid filetype, and then start over function
-    zenity --error --width=500 --height=200 --title="That file is not a chd file. Please try again." --text="$single_chdtogdi_input_basename is not a chd file. Please try again." && single_chdtogdi
+    zenity --error --width="500" --height="200" --title="That file is not a chd file. Please try again." --text="$single_chdtogdi_input_basename is not a chd file. Please try again." && single_chdtogdi
   fi
 }
 #######################################
@@ -206,7 +206,7 @@ single_chdtocue () {
       final_single_chdtocue_output="$single_chdtocue_output"/"$single_chdtocue_input_basename_no_ext"/"$single_chdtocue_input_basename_no_ext.cue"
 
       # Start extracting bin/cue from chd
-      chdman5 extractcd -i "$single_chdtocue_input" -o "$final_single_chdtocue_output" | zenity --progress --auto-kill --pulsate --width="400" --auto-close --title="Converting $single_chdtocue_input_basename_no_ext" --text="Creating:  $single_chdtocue_input_basename_no_ext.cue"
+      (chdman5 extractcd -i "$single_chdtocue_input" -o "$final_single_chdtocue_output" | zenity --progress --auto-kill --pulsate --width="400" --auto-close --title="Converting $single_chdtocue_input_basename_no_ext" --text="Creating:  $single_chdtocue_input_basename_no_ext.cue")
 
         # Cancel conversion, and delete incomplete file if cancel is pressed.
         if [[ "$?" != 0 ]]; then
@@ -219,22 +219,21 @@ single_chdtocue () {
     fi  
   else
     # error pop up box if not valid filetype, and then start over function
-    zenity --error --width=500 --height=200 --title="That file is not a chd file. Please try again." --text="$single_chdtocue_input_basename is not a chd file. Please try again." && single_chdtocue
+    zenity --error --width="500" --height="200" --title="That file is not a chd file. Please try again." --text="$single_chdtocue_input_basename is not a chd file. Please try again." && single_chdtocue
   fi
 }
 #######################################
 # Create a function for $opt1 & $opt6 #
 #####################################################################################################################################################################################################################################
-
 # Create a function for single iso to cso conversion
 single_isotocso () {
   # Asks the user for input file, and creates "$single_isotocso_input"
   single_isotocso_input=$(zenity --file-selection --filename="Desktop" --title="Select iso file to convert")
 
-  # Exits if user hits cancel button
-  if [[ "$?" != 0 ]]; then
-    exit
-  fi
+    # Exits if user hits cancel button
+    if [[ "$?" != 0 ]]; then
+      exit
+    fi
 
   # Takes input "$single_isotocso_input" (path/game name.iso) , and removes the path creating "$single_isotocso_input_basename" (game name.iso) 
   single_isotocso_input_basename="$(basename "$single_isotocso_input")"
@@ -242,33 +241,41 @@ single_isotocso () {
   # Takes "$single_isotocso_input_basename", and removes the extention (.iso) creating "$single_isotocso_input_basename_no_ext" (game name)
   single_isotocso_input_basename_no_ext=${single_isotocso_input_basename%.*}
     
-  if [[ $single_isotocso_input_basename == *.iso ]]; then
+  if [[ "$single_isotocso_input_basename" == *.iso ]]; then
     # Ask user for file output folder, and creates "$single_isotocso_output"
     single_isotocso_output=$(zenity --file-selection  --directory --filename="Desktop" --title="Where do you want to save it?")
 
     # Opens box asking for compression level, and sets "$action1" to "$opt8" - "$opt17" from user selection
     action3=$(zenity --list --width="300" --height="400" --title="What compression level?" --text="Select compression level" --radiolist  --column="Pick" --column="Compression Level" FALSE "$opt8" FALSE "$opt9" FALSE "$opt10" FALSE "$opt11" FALSE "$opt12" FALSE "$opt13" FALSE "$opt14" FALSE "$opt15" TRUE "$opt16")
 
-    # Exits if user hits cancel button
-    if [[ "$?" != 0 ]]; then
-      exit
-    fi
+      # Exits if user hits cancel button
+      if [[ "$?" != 0 ]]; then
+        exit
+      fi
+
+    # Create final output path
+    final_single_isotocso_output="$single_isotocso_output"/"$single_isotocso_input_basename_no_ext.cso"
 
     # Don't overwrite if file exists
-    if [[ ! -f "$single_isotocso_output"/"$single_isotocso_input_basename_no_ext.cso" ]]; then
+    if [[ ! -f "$final_single_isotocso_output" ]]; then
 
       # Starts converting to cso
-      ciso "$action3" "$single_isotocso_input" "$single_isotocso_output"/"$single_isotocso_input_basename_no_ext.cso" | zenity --progress --auto-kill --pulsate --width="400" --auto-close --title="Converting $single_isotocso_input_basename_no_ext" --text="Creating $single_isotocso_input_basename_no_ext.cso"
+      (ciso "$action3" "$single_isotocso_input" "$final_single_isotocso_output" | zenity --progress --auto-kill --pulsate --width="400" --auto-close --title="Converting $single_isotocso_input_basename_no_ext" --text="Creating: $single_isotocso_input_basename_no_ext.cso")
+
+        # Cancel conversion, and delete incomplete file if cancel is pressed.
+        if [[ "$?" != 0 ]]; then
+          rm "$final_single_isotocso_output"
+          pkill ciso
+        fi
+    else
+      # Display error box stating the output file already exists
+      zenity --error --width="400" --title="File already exists!" --text="$final_single_isotocso_output already exists!"
     fi  
-    # Exits if user hits cancel button
-    if [[ "$?" != 0 ]]; then
-      exit
-    fi
-  else 
-  zenity --error --width=400 --height=200 --text="That file is not a iso file. Please try again." && single_isotocso
+  else
+    # error pop up box if not valid filetype, and then start over function  
+    zenity --error --width="500" --height="200" --title="That file is not a iso file. Please try again." --text="$single_isotocso_input_basename is not a iso file. Please try again." && single_isotocso
   fi
 }
-
 #######################################
 # Create a function for $opt1 & $opt7 #
 #####################################################################################################################################################################################################################################
