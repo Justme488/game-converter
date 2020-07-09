@@ -497,55 +497,59 @@ batch_chdtocue() {
 #######################################
 # Create a function for $opt2 & $opt6 #
 #####################################################################################################################################################################################################################################
-
 # Create a function for batch iso to cso conversion
 batch_isotocso() {
   # Asks the user for input folder, and creates "$batch_isotocso_input"
   batch_isotocso_input=$(zenity --file-selection --directory --filename="Desktop" --title="Select the folder where you keep your iso files")
 
-  # Exits if user hits cancel button
-  if [[ "$?" != 0 ]]; then
-    exit
-  fi
+    # Exits if user hits cancel button
+    if [[ "$?" != 0 ]]; then
+      exit
+    fi
 
   # Asks the user for output folder, and creates "$batch_isotocso_output"
   batch_isotocso_output=$(zenity --file-selection --directory --filename="Desktop" --title="Where do you want to save them?")
 
-  # Exits if user hits cancel button
-  if [[ "$?" != 0 ]]; then
-    exit
-  fi
+    # Exits if user hits cancel button
+    if [[ "$?" != 0 ]]; then
+      exit
+    fi
 
   # Opens box asking for compression level, and sets "$action4" to "$opt8" - "$opt17" from user selection
   action4=$(zenity --list --width="300" --height="400" --title="What compression level?" --text="Select compression level" --radiolist  --column="Pick" --column="Compression Level" FALSE "$opt8" FALSE "$opt9" FALSE "$opt10" FALSE "$opt11" FALSE "$opt12" FALSE "$opt13" FALSE "$opt14" FALSE "$opt15" TRUE "$opt16")
 
-  # Exits if user hits cancel button
-  if [[ "$?" != 0 ]]; then
-    exit
-  fi
+    # Exits if user hits cancel button
+    if [[ "$?" != 0 ]]; then
+      exit
+    fi
 
   # Loop through games folder recursively looking for iso files
   for batch_isotocso_file in "$batch_isotocso_input"/*.iso; do
+
     # Removes path for file in loop, creating "$batch_isotocso_file_basename" (filename.iso)
     batch_isotocso_file_basename="$(basename "$batch_isotocso_file")"
 
     # Takes the basename "batch_isotocso_file_basename", and removes extension (.iso) creating "$batch_isotocso_file_basename_no_ext" (filename)
     batch_isotocso_file_basename_no_ext=${batch_isotocso_file_basename%.*}
 
-    # Don't overwrite if file exists
-    if [[ ! -f "$batch_isotocso_output"/"$batch_isotocso_file_basename_no_ext.cso" ]]; then
+    # Create final output path
+    final_batch_isotocso_output="$batch_isotocso_output"/"$batch_isotocso_file_basename_no_ext.cso"
 
-      # Start converting to cso
-      ciso "$action4" "$batch_isotocso_file" "$batch_isotocso_output"/"$batch_isotocso_file_basename_no_ext.cso" | zenity --progress --auto-kill --pulsate --width="400" --auto-close --title="Converting iso to cso" --text="Creating $batch_isotocso_file_basename_no_ext.cso"
-    fi
+      # Don't overwrite if file exists
+      if [[ ! -f "$final_batch_isotocso_output" ]]; then
+
+        # Start converting to cso
+        (ciso "$action4" "$batch_isotocso_file" "$final_batch_isotocso_output" | zenity --progress --auto-kill --pulsate --width="400" --auto-close --title="Converting $batch_isotocso_file_basename_no_ext" --text="Creating: $batch_isotocso_file_basename_no_ext.cso")
+    
+          # Cancel conversion, and delete incomplete file if cancel is pressed.
+          if [[ "$?" != 0 ]]; then
+            rm "$final_batch_isotocso_output"
+            pkill ciso
+            break
+          fi
+      fi
   done
-
-  # Exits if user hits cancel button
-  if [[ "$?" != 0 ]]; then
-    exit
-  fi
 }
-
 #######################################
 # Create a function for $opt2 & $opt7 #
 #####################################################################################################################################################################################################################################
