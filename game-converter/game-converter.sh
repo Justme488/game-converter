@@ -396,27 +396,27 @@ batch_tochd () {
 #######################################
 # Create a function for $opt2 & $opt4 #
 #####################################################################################################################################################################################################################################
-
 # Create a function for batch Convertion from chd to gdi
 batch_chdtogdi() {
   # Asks the user for input folder, and creates "$batch_tochd_input"
   batch_chdtogdi_input=$(zenity --file-selection --directory --filename="Desktop" --title="Select the folder where you keep your chd files")
 
-  # Exits if user hits cancel button
-  if [[ "$?" != 0 ]]; then
-    exit
-  fi
+    # Exits if user hits cancel button
+    if [[ "$?" != 0 ]]; then
+      exit
+    fi
 
   # Asks the user for output folder, and creates "$batch_tochd_output"
   batch_chdtogdi_output=$(zenity --file-selection --directory --filename="Desktop" --title="Where you want to save all of these folders?")
 
-  # Exits if user hits cancel button
-  if [[ "$?" != 0 ]]; then
-    exit
-  fi
+    # Exits if user hits cancel button
+    if [[ "$?" != 0 ]]; then
+      exit
+    fi
 
   # Loop through games folder recursively looking for chd files
   for batch_chdtogdi_file in "$batch_chdtogdi_input"/*.chd; do
+
     # Removes path for file in loop, creating "$batch_chdtogdi_file_basename" (filename.chd)
     batch_chdtogdi_file_basename="$(basename "$batch_chdtogdi_file")"
 
@@ -426,23 +426,24 @@ batch_chdtogdi() {
     # Create a smaller output path "$final_batch_chdtogdi_output". (output path = output folder selected / input file basename with no extension / input file basename with no extension)
     final_batch_chdtogdi_output="$batch_chdtogdi_output"/"$batch_chdtogdi_file_basename_no_ext"/"$batch_chdtogdi_file_basename_no_ext.gdi"
 
-    # Create a directory so all files have their own folder
-    mkdir "$batch_chdtogdi_output"/"$batch_chdtogdi_file_basename_no_ext"
-
     # Don't overwrite if folder exists
-    if [[ ! -f "$final_batch_chdtogdi_output" ]]; then
+    if [[ ! -d "$batch_chdtogdi_output"/"$batch_chdtogdi_file_basename_no_ext" ]]; then
 
-    # Start converting to gdi
-    chdman5 extractcd -i "$batch_chdtogdi_file" -o "$final_batch_chdtogdi_output" | zenity --progress --pulsate --auto-kill --auto-close --title="converting chd files to gdi" --text="Converting $batch_chdtogdi_file_basename_no_ext to gdi"
+      # Create a directory so all files have their own folder
+      mkdir "$batch_chdtogdi_output"/"$batch_chdtogdi_file_basename_no_ext"
+
+      # Start converting to gdi
+      (chdman5 extractcd -i "$batch_chdtogdi_file" -o "$final_batch_chdtogdi_output" | zenity --progress --pulsate --auto-kill --auto-close --title="Converting $batch_chdtogdi_file_basename_no_ext" --text="Creating: $batch_chdtogdi_file_basename_no_ext.gdi")
+    
+        # Cancel conversion, and delete incomplete file if cancel is pressed.
+        if [[ "$?" != 0 ]]; then
+          rm -r "$batch_chdtogdi_output"/"$batch_chdtogdi_file_basename_no_ext"
+          pkill chdman5
+          break
+        fi
     fi
   done
-
-  # Exits if user hits cancel button
-  if [[ "$?" != 0 ]]; then
-    exit
-  fi
 }
-
 #######################################
 # Create a function for $opt2 & $opt5 #
 #####################################################################################################################################################################################################################################
