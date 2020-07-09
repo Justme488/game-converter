@@ -279,16 +279,15 @@ single_isotocso () {
 #######################################
 # Create a function for $opt1 & $opt7 #
 #####################################################################################################################################################################################################################################
-
 # Create a function for single cso to iso conversion
 single_csotoiso () {
   # Asks the user for input file, and creates "$single_csotoiso_input"
   single_csotoiso_input=$(zenity --file-selection --filename="Desktop" --title="Select cso file to convert")
 
-  # Exits if user hits cancel button
-  if [[ "$?" != 0 ]]; then
-    exit
-  fi
+    # Exits if user hits cancel button
+    if [[ "$?" != 0 ]]; then
+      exit
+    fi
 
   # Takes input variable "$single_csotoiso_input" (path/game name.cso) , and removes the path creating "$single_csotoiso_input_basename" (game name.cso) 
   single_csotoiso_input_basename="$(basename "$single_csotoiso_input")"
@@ -300,27 +299,33 @@ single_csotoiso () {
     # Ask user for file output folder, and creates "$single_csotoiso_output"
     single_csotoiso_output=$(zenity --file-selection --directory --filename="Desktop" --title="Where do you want to save it?")
 
-    # Exits if user hits cancel button
-    if [[ "$?" != 0 ]]; then
-      exit
-    fi
+      # Exits if user hits cancel button
+      if [[ "$?" != 0 ]]; then
+        exit
+      fi
+
+    # Create final output path
+    final_single_csotoiso_output="$single_csotoiso_output"/"$single_csotoiso_input_basename_no_ext.iso"
 
     # Don't overwrite if file exists
-    if [[ ! -f "$single_csotoiso_output"/"$single_csotoiso_input_basename_no_ext.iso" ]]; then
+    if [[ ! -f "$final_single_csotoiso_output" ]]; then
 
       # Start uncompressing .cso
-      ciso 0 "$single_csotoiso_input" "$single_csotoiso_output"/"$single_csotoiso_input_basename_no_ext.iso" | zenity --progress --auto-kill --pulsate --auto-close --title="Converting $single_csotoiso_input_basename_no_ext" --text="creating $single_csotoiso_input_basename_no_ext.iso"
-    fi  
-
-    # Exits if user hits cancel button
-    if [[ "$?" != 0 ]]; then
-      exit
+      (ciso 0 "$single_csotoiso_input" "$final_single_csotoiso_output" | zenity --progress --auto-kill --pulsate --auto-close --title="Converting $single_csotoiso_input_basename_no_ext" --text="creating $single_csotoiso_input_basename_no_ext.iso")
+ 
+        # Cancel conversion, and delete incomplete file if cancel is pressed.
+        if [[ "$?" != 0 ]]; then
+          rm "$final_single_csotoiso_output"
+          pkill ciso
+        fi
+    else
+      # Display error box stating the output file already exists
+      zenity --error --width="400" --title="File already exists!" --text="$final_single_csotoiso_output already exists!"
     fi
   else 
-    zenity --error --width=400 --height=200 --text="That file is not a cso file. Please try again." && single_csotoiso
+    zenity --error --width="500" --height="200" --title="That file is not a cso file. Please try again." --text="$single_csotoiso_input_basename is not a cso file. Please try again." && single_csotoiso
   fi
 }
-
 #######################################
 # Create a function for $opt2 & $opt3 #
 #####################################################################################################################################################################################################################################
