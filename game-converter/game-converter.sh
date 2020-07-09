@@ -311,7 +311,7 @@ single_csotoiso () {
     if [[ ! -f "$final_single_csotoiso_output" ]]; then
 
       # Start uncompressing .cso
-      (ciso 0 "$single_csotoiso_input" "$final_single_csotoiso_output" | zenity --progress --auto-kill --pulsate --auto-close --title="Converting $single_csotoiso_input_basename_no_ext" --text="creating $single_csotoiso_input_basename_no_ext.iso")
+      (ciso 0 "$single_csotoiso_input" "$final_single_csotoiso_output" | zenity --progress --auto-kill --pulsate --auto-close --title="Converting $single_csotoiso_input_basename_no_ext" --text="creating: $single_csotoiso_input_basename_no_ext.iso")
  
         # Cancel conversion, and delete incomplete file if cancel is pressed.
         if [[ "$?" != 0 ]]; then
