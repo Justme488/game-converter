@@ -447,24 +447,23 @@ batch_chdtogdi() {
 #######################################
 # Create a function for $opt2 & $opt5 #
 #####################################################################################################################################################################################################################################
-
 # Create a function for batch Convertion from chd to bin/cue
 batch_chdtocue() {
   # Asks the user for input folder, and creates "$batch_chdtocue_input"
   batch_chdtocue_input=$(zenity --file-selection --directory --filename="Desktop" --title="Select the folder where you keep your chd files")
 
-  # Exits if user hits cancel button
-  if [[ "$?" != 0 ]]; then
-    exit
-  fi
+    # Exits if user hits cancel button
+    if [[ "$?" != 0 ]]; then
+      exit
+    fi
 
   # Asks the user for output folder, and creates "$batch_chdtocue_output"
   batch_chdtocue_output=$(zenity --file-selection --directory --filename="Desktop" --title="Where you want to save all of these folders?")
 
-  # Exits if user hits cancel button
-  if [[ "$?" != 0 ]]; then
-    exit
-  fi
+    # Exits if user hits cancel button
+    if [[ "$?" != 0 ]]; then
+      exit
+    fi
 
   # Loop through games folder recursively looking for chd files
   for batch_chdtocue_file in "$batch_chdtocue_input"/*.chd; do
@@ -478,22 +477,23 @@ batch_chdtocue() {
     final_batch_chdtocue_output="$batch_chdtocue_output"/"$batch_chdtocue_file_basename_no_ext"/"$batch_chdtocue_file_basename_no_ext.cue"
 
     # Don't overwrite if folder exists
-    if [[ ! -f "$final_batch_chdtocue_output" ]]; then
+    if [[ ! -d "$batch_chdtocue_output"/"$batch_chdtocue_file_basename_no_ext" ]]; then
 
       # Create a directory so all files have their own folder
       mkdir "$batch_chdtocue_output"/"$batch_chdtocue_file_basename_no_ext"
 
       # Start converting to bin/cue
-      chdman5 extractcd -i "$batch_chdtocue_file" -o "$final_batch_chdtocue_output" | zenity --progress --pulsate --auto-kill --auto-close --title="converting chd files to bin/cue" --text="Converting $batch_chdtocue_file_basename_no_ext to bin/cue"
+      (chdman5 extractcd -i "$batch_chdtocue_file" -o "$final_batch_chdtocue_output" | zenity --progress --pulsate --auto-kill --auto-close --title="converting $batch_chdtocue_file" --text="Creating: $batch_chdtocue_file_basename_no_ext.cue")
+    
+        # Cancel conversion, and delete incomplete file if cancel is pressed.
+        if [[ "$?" != 0 ]]; then
+          rm -r "$batch_chdtocue_output"/"$batch_chdtocue_file_basename_no_ext"
+          pkill chdman5
+          break
+        fi
     fi
-  done
-
-  # Exits if user hits cancel button
-  if [[ "$?" != 0 ]]; then
-    exit
-  fi
+  done  
 }
-
 #######################################
 # Create a function for $opt2 & $opt6 #
 #####################################################################################################################################################################################################################################
