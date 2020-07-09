@@ -329,7 +329,6 @@ single_csotoiso () {
 #######################################
 # Create a function for $opt2 & $opt3 #
 #####################################################################################################################################################################################################################################
-
 # Create a function for batch conversion to chd
 batch_tochd () {
   # Asks the user for input folder, and creates "$batch_tochd_input"
@@ -364,22 +363,37 @@ batch_tochd () {
     # Takes the basename "batch_tochd_file_basename", and removes extension (cue, gdi, or toc) creating "$batch_tochd_file_basename_no_ext" (filename)
     batch_tochd_file_basename_no_ext=${batch_tochd_file_basename%.*}
 
-    # Create a smaller output path "$final_batch_tochd_output". (output path = output folder selected / input file basename with no extension) and adds .chd
+    # Create final output path
     final_batch_tochd_output="$batch_tochd_output"/"$batch_tochd_file_basename_no_ext.chd"
 
     # Don't overwrite if file exists
-    if [[ ! -f "$batch_tochd_output"/"$batch_tochd_file_basename_no_ext.chd" ]]; then
+    if [[ ! -f "$final_batch_tochd_output" ]]; then
 
       # Starts creating chd if folder is selected
       if [[ "$chdman_ver" == "$opt_chdman4" ]]; then
-        chdman4 -createcd "$batch_tochd_file" "$final_batch_tochd_output" | zenity --progress --pulsate --auto-kill --width="500"  --auto-close --title="Converting $batch_tochd_file_basename_no_ext to chd" --text="Creating               $batch_tochd_file_basename_no_ext.chd"
+        (chdman4 -createcd "$batch_tochd_file" "$final_batch_tochd_output" | zenity --progress --pulsate --auto-kill --width="500"  --auto-close --title="Converting $batch_tochd_file_basename_no_ext to chd" --text="
+Creating: $batch_tochd_file_basename_no_ext.chd")
+
+        # Cancel conversion, and delete incomplete file if cancel is pressed.
+        if [[ "$?" != 0 ]]; then
+          rm "$final_batch_tochd_output"
+          pkill chdman4
+          break
+        fi
+
       elif [[ "$chdman_ver" == "$opt_chdman5" ]]; then
-        chdman5 createcd -i "$batch_tochd_file" -o "$final_batch_tochd_output" | zenity --progress --pulsate --auto-kill --width="500"  --auto-close --title="Converting $batch_tochd_file_basename_no_ext to chd" --text="Creating $batch_tochd_file_basename_no_ext.chd"
+        (chdman5 createcd -i "$batch_tochd_file" -o "$final_batch_tochd_output" | zenity --progress --pulsate --auto-kill --width="500"  --auto-close --title="Converting $batch_tochd_file_basename_no_ext to chd" --text="Creating: $batch_tochd_file_basename_no_ext.chd")
+
+        # Cancel conversion, and delete incomplete file if cancel is pressed.
+        if [[ "$?" != 0 ]]; then
+          rm "$final_batch_tochd_output"
+          pkill chdman5
+          break
+        fi
       fi
     fi
   done
 }
-
 #######################################
 # Create a function for $opt2 & $opt4 #
 #####################################################################################################################################################################################################################################
