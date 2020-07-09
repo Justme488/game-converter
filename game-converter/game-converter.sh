@@ -81,7 +81,7 @@ single_tochd () {
 
       # If chdman4 was selected, start creating chd
       if [[ "$chdman_ver" == "$opt_chdman4" ]]; then
-        (chdman4 -createcd "$single_tochd_input" "$final_single_tochd_output" | zenity --progress --pulsate --auto-kill --width="500"  --auto-close --title="Converting $single_tochd_input_basename_no_ext" --text="Creating: $single_tochd_input_basename_no_ext.chd")
+        (chdman4 -createcd "$single_tochd_input" "$final_single_tochd_output" | zenity --progress --pulsate --auto-kill --width="400"  --auto-close --title="Converting $single_tochd_input_basename_no_ext" --text="Creating: $single_tochd_input_basename_no_ext.chd")
 
         # Cancel conversion, and delete incomplete file if cancel is pressed.
         if [[ "$?" != 0 ]]; then
@@ -91,7 +91,7 @@ single_tochd () {
 
       # If chdman5 was selected, start creating chd
       elif [[ "$chdman_ver" == "$opt_chdman5" ]]; then
-        (chdman5 createcd -i "$single_tochd_input" -o "$final_single_tochd_output" | zenity --progress --pulsate --auto-kill --width="500"  --auto-close --title="Converting $single_tochd_input_basename_no_ext" --text="Creating: $single_tochd_input_basename_no_ext.chd")
+        (chdman5 createcd -i "$single_tochd_input" -o "$final_single_tochd_output" | zenity --progress --pulsate --auto-kill --width="400"  --auto-close --title="Converting $single_tochd_input_basename_no_ext" --text="Creating: $single_tochd_input_basename_no_ext.chd")
 
        # Cancel conversion, and delete incomplete file if cancel is pressed.
         if [[ "$?" != 0 ]]; then
@@ -147,7 +147,7 @@ single_chdtogdi () {
       final_single_chdtogdi_output="$single_chdtogdi_output"/"$single_chdtogdi_input_basename_no_ext"/"$single_chdtogdi_input_basename_no_ext.gdi"
 
       # Starts creating gdi from chd
-      (chdman5 extractcd -i "$single_chdtogdi_input" -o "$final_single_chdtogdi_output" | zenity --progress --auto-kill --pulsate --auto-close --width="500" --title="converting $single_chdtogdi_input_basename_no_ext" --text="Creating: $single_chdtogdi_input_basename_no_ext.gdi")
+      (chdman5 extractcd -i "$single_chdtogdi_input" -o "$final_single_chdtogdi_output" | zenity --progress --auto-kill --pulsate --auto-close --width="400" --title="converting $single_chdtogdi_input_basename_no_ext" --text="Creating: $single_chdtogdi_input_basename_no_ext.gdi")
 
         # Cancel conversion, and delete incomplete file if cancel is pressed.
           if [[ "$?" != 0 ]]; then
@@ -204,7 +204,7 @@ single_chdtocue () {
 
         # Cancel conversion, and delete incomplete file if cancel is pressed.
         if [[ "$?" != 0 ]]; then
-          rm -r "$final_single_chdtocue_output"
+          rm -r "$single_chdtocue_output"/"$single_chdtocue_input_basename_no_ext"
           pkill chdman5
         fi
     else
@@ -307,7 +307,7 @@ single_csotoiso () {
     if [[ ! -f "$final_single_csotoiso_output" ]]; then
 
       # Start uncompressing .cso
-      (ciso 0 "$single_csotoiso_input" "$final_single_csotoiso_output" | zenity --progress --auto-kill --pulsate --auto-close --title="Converting $single_csotoiso_input_basename_no_ext" --text="creating: $single_csotoiso_input_basename_no_ext.iso")
+      (ciso 0 "$single_csotoiso_input" "$final_single_csotoiso_output" | zenity --progress --auto-kill --pulsate --width="400" --auto-close --title="Converting $single_csotoiso_input_basename_no_ext" --text="creating: $single_csotoiso_input_basename_no_ext.iso")
 
         # Cancel conversion, and delete incomplete file if cancel is pressed
         if [[ "$?" != 0 ]]; then
@@ -368,7 +368,7 @@ batch_tochd () {
 
       # Starts creating chd if folder is selected
       if [[ "$chdman_ver" == "$opt_chdman4" ]]; then
-        (chdman4 -createcd "$batch_tochd_file" "$final_batch_tochd_output" | zenity --progress --pulsate --auto-kill --width="500"  --auto-close --title="Converting $batch_tochd_file_basename_no_ext to chd" --text="Creating: $batch_tochd_file_basename_no_ext.chd")
+        (chdman4 -createcd "$batch_tochd_file" "$final_batch_tochd_output" | zenity --progress --pulsate --auto-kill --width="400"  --auto-close --title="Converting $batch_tochd_file_basename_no_ext" --text="Creating: $batch_tochd_file_basename_no_ext.chd")
 
         # Cancel conversion, and delete incomplete file if cancel is pressed.
         if [[ "$?" != 0 ]]; then
@@ -378,7 +378,7 @@ batch_tochd () {
         fi
 
       elif [[ "$chdman_ver" == "$opt_chdman5" ]]; then
-        (chdman5 createcd -i "$batch_tochd_file" -o "$final_batch_tochd_output" | zenity --progress --pulsate --auto-kill --width="500"  --auto-close --title="Converting $batch_tochd_file_basename_no_ext to chd" --text="Creating: $batch_tochd_file_basename_no_ext.chd")
+        (chdman5 createcd -i "$batch_tochd_file" -o "$final_batch_tochd_output" | zenity --progress --pulsate --auto-kill --width="400"  --auto-close --title="Converting $batch_tochd_file_basename_no_ext" --text="Creating: $batch_tochd_file_basename_no_ext.chd")
 
         # Cancel conversion, and delete incomplete file if cancel is pressed.
         if [[ "$?" != 0 ]]; then
@@ -430,7 +430,7 @@ batch_chdtogdi() {
       mkdir "$batch_chdtogdi_output"/"$batch_chdtogdi_file_basename_no_ext"
 
       # Start converting to gdi
-      (chdman5 extractcd -i "$batch_chdtogdi_file" -o "$final_batch_chdtogdi_output" | zenity --progress --pulsate --auto-kill --auto-close --title="Converting $batch_chdtogdi_file_basename_no_ext" --text="Creating: $batch_chdtogdi_file_basename_no_ext.gdi")
+      (chdman5 extractcd -i "$batch_chdtogdi_file" -o "$final_batch_chdtogdi_output" | zenity --progress --pulsate --width="400" --auto-kill --auto-close --title="Converting $batch_chdtogdi_file_basename_no_ext" --text="Creating: $batch_chdtogdi_file_basename_no_ext.gdi")
 
         # Cancel conversion, and delete incomplete file if cancel is pressed.
         if [[ "$?" != 0 ]]; then
@@ -481,7 +481,7 @@ batch_chdtocue() {
       mkdir "$batch_chdtocue_output"/"$batch_chdtocue_file_basename_no_ext"
 
       # Start converting to bin/cue
-      (chdman5 extractcd -i "$batch_chdtocue_file" -o "$final_batch_chdtocue_output" | zenity --progress --pulsate --auto-kill --auto-close --title="converting $batch_chdtocue_file" --text="Creating: $batch_chdtocue_file_basename_no_ext.cue")
+      (chdman5 extractcd -i "$batch_chdtocue_file" -o "$final_batch_chdtocue_output" | zenity --progress --pulsate --width="400" --auto-kill --auto-close --title="converting $batch_chdtocue_file_basename_no_ext" --text="Creating: $batch_chdtocue_file_basename_no_ext.cue")
         # Cancel conversion, and delete incomplete file if cancel is pressed.
         if [[ "$?" != 0 ]]; then
           rm -r "$batch_chdtocue_output"/"$batch_chdtocue_file_basename_no_ext"
@@ -584,7 +584,7 @@ batch_csotoiso() {
     if [[ ! -f "$final_batch_csotoiso_output" ]]; then
 
       # Start converting to iso
-      (ciso 0 "$batch_csotoiso_file" "$final_batch_csotoiso_output" | zenity --progress --auto-kill --pulsate --width="400" --auto-close --title="Converting $batch_csotoiso_file" --text="Creating: $batch_csotoiso_file_basename_no_ext.iso")
+      (ciso 0 "$batch_csotoiso_file" "$final_batch_csotoiso_output" | zenity --progress --auto-kill --pulsate --width="400" --auto-close --title="Converting $batch_csotoiso_file_basename_no_ext" --text="Creating: $batch_csotoiso_file_basename_no_ext.iso")
 
         # Cancel conversion, and delete incomplete file if cancel is pressed.
         if [[ "$?" != 0 ]]; then
