@@ -119,16 +119,16 @@ single_tochd () {
 #######################################
 # Create a function for $opt1 & $opt4 #
 #####################################################################################################################################################################################################################################
-
-# Create a function for single file conversion to chd
+# Create a function for single file conversion to gdi
 single_chdtogdi () {
+  
   # Asks the user for input file, and creates $single_chdtogdi_input
   single_chdtogdi_input=$(zenity --file-selection --filename="Desktop" --title="Select chd file to convert to gdi")
 
-  # Exits if user hits cancel button
-  if [[ "$?" != 0 ]]; then
-    exit
-  fi
+    # Exits if user hits cancel button
+    if [[ "$?" != 0 ]]; then
+      exit
+    fi
 
   # Takes input variable "$single_chdtogdi_input" (path/game name.chd) , and removes the path creating "$single_chdtogdi_input_basename" (game name.chd) 
   single_chdtogdi_input_basename="$(basename "$single_chdtogdi_input")"
@@ -145,29 +145,31 @@ single_chdtogdi () {
       exit
     fi
 
-    # Creates a directory for the conversion
-    mkdir "$single_chdtogdi_output/$single_chdtogdi_input_basename_no_ext"
+    # If output directory doesn't exist
+    if [[ ! -d "$single_chdtogdi_output"/"$single_chdtogdi_input_basename_no_ext" ]]; then
+      # Creates a directory for the conversion
+      mkdir "$single_chdtogdi_output/$single_chdtogdi_input_basename_no_ext"
 
-    # Create final output path variable
-    final_single_chdtogdi_save_dir="$single_chdtogdi_output"/"$single_chdtogdi_input_basename_no_ext"/"$single_chdtogdi_input_basename_no_ext.gdi"
+      # Create final output path variable
+      final_single_chdtogdi_output="$single_chdtogdi_output"/"$single_chdtogdi_input_basename_no_ext"/"$single_chdtogdi_input_basename_no_ext.gdi"
 
-    # Don't overwrite if folder exists
-    if [[ ! -f "$final_single_chdtogdi_save_dir" ]]; then
+      # Starts creating gdi from chd
+      chdman5 extractcd -i "$single_chdtogdi_input" -o "$final_single_chdtogdi_output" | zenity --progress --auto-kill --pulsate --auto-close --width="500" --title="converting $single_chdtogdi_input_basename_no_ext" --text="Creating: $single_chdtogdi_input_basename_no_ext.gdi"
 
-    # Starts creating gdi from chd
-    chdman5 extractcd -i "$single_chdtogdi_input" -o "$final_single_chdtogdi_save_dir" | zenity --progress --auto-kill --pulsate --auto-close --width="500" --title="converting $single_chdtogdi_input_basename_no_ext" --text="Converting $single_chdtogdi_input_basename_no_ext to gdi"
-
-      # Exits if user hits cancel button
-      if [[ "$?" != 0 ]]; then
-        exit
+        # Cancel conversion, and delete incomplete file if cancel is pressed.
+          if [[ "$?" != 0 ]]; then
+            rm "$final_single_chdtogdi_output"
+            pkill chdman5
+          fi
+    else
+      # Display error box stating the output folder already exists
+      zenity --error --width="400" --title="Folder already exists!" --text="$single_chdtogdi_output/$single_chdtogdi_input_basename_no_ext already exists!"
     fi
-      fi
   else 
     # error pop up box if not valid filetype, and then start over function
-    zenity --error --width=400 --height=200 --text="That file is not a chd file. Please try again." && single_chdtogdi
+    zenity --error --width=500 --height=200 --title="That file is not a chd file. Please try again." --text="$single_chdtogdi_input_basename is not a chd file. Please try again." && single_chdtogdi
   fi
 }
-
 #######################################
 # Create a function for $opt1 & $opt5 #
 ###################restartfunction##################################################################################################################################################################################################################
