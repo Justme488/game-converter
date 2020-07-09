@@ -173,16 +173,15 @@ single_chdtogdi () {
 #######################################
 # Create a function for $opt1 & $opt5 #
 ###################restartfunction##################################################################################################################################################################################################################
-
 # Create a function for single coversion from chd to cue
 single_chdtocue () {
   # Asks the user for input file, creates "$single_chdtocue_input"
   single_chdtocue_input=$(zenity --file-selection --filename="Desktop" --title="Select chd to convert")
 
-  # Exits if user hits cancel button
-  if [[ "$?" != 0 ]]; then
-    exit
-  fi
+    # Exits if user hits cancel button
+    if [[ "$?" != 0 ]]; then
+      exit
+    fi
 
   # Takes input variable "$single_chdtocue_input" (path/game name.chd) , and removes the path creating "$single_chdtocue_input_basename" (game name.chd) 
   single_chdtocue_input_basename="$(basename "$single_chdtocue_input")"
@@ -198,30 +197,31 @@ single_chdtocue () {
       exit
     fi
 
-    # Create a directoryrestartfunction for the files to be extracted in
-    mkdir "$single_chdtocue_output"/"$single_chdtocue_input_basename_no_ext"
-
-    # Set final output path
-    final_single_chdtocue_save_dir="$single_chdtocue_output"/"$single_chdtocue_input_basename_no_ext"/"$single_chdtocue_input_basename_no_ext.cue"
-
     # Don't overwrite if folder exists
-    if [[ ! -f "$final_single_chdtocue_save_dir" ]]; then
+    if [[ ! -d "$single_chdtocue_output"/"$single_chdtocue_input_basename_no_ext" ]]; then
+      # Create a directory for the files to be extracted in
+      mkdir "$single_chdtocue_output"/"$single_chdtocue_input_basename_no_ext"
 
-    # Start extracting from chd
-    chdman5 extractcd -i "$single_chdtocue_input" -o "$final_single_chdtocue_save_dir" | zenity --progress --auto-kill --pulsate --width="400" --auto-close --title="Converting $single_chdtocue_input_basename_no_ext" --text="Converting $single_chdtocue_input_basename_no_ext to bin/cue"
+      # Set final output path
+      final_single_chdtocue_output="$single_chdtocue_output"/"$single_chdtocue_input_basename_no_ext"/"$single_chdtocue_input_basename_no_ext.cue"
 
-   fi  
-      # Exits if user hits cancel button
-      if [[ "$?" != 0 ]]; then
-        exit
-      fi
+      # Start extracting bin/cue from chd
+      chdman5 extractcd -i "$single_chdtocue_input" -o "$final_single_chdtocue_output" | zenity --progress --auto-kill --pulsate --width="400" --auto-close --title="Converting $single_chdtocue_input_basename_no_ext" --text="Creating:  $single_chdtocue_input_basename_no_ext.cue"
+
+        # Cancel conversion, and delete incomplete file if cancel is pressed.
+        if [[ "$?" != 0 ]]; then
+          rm "$final_single_chdtocue_output"
+          pkill chdman5
+        fi
+    else
+      # Display error box stating the output folder already exists
+      zenity --error --width="400" --title="Folder already exists!" --text="$single_chdtocue_output/$single_chdtocue_input_basename_no_ext already exists!"
+    fi  
   else
     # error pop up box if not valid filetype, and then start over function
-    zenity --error --width=400 --height=200 --text="That file is not a chd file. Please try again." && single_chdtocue
+    zenity --error --width=500 --height=200 --title="That file is not a chd file. Please try again." --text="$single_chdtocue_input_basename is not a chd file. Please try again." && single_chdtocue
   fi
-
 }
-
 #######################################
 # Create a function for $opt1 & $opt6 #
 #####################################################################################################################################################################################################################################
