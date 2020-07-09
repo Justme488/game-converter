@@ -371,8 +371,7 @@ batch_tochd () {
 
       # Starts creating chd if folder is selected
       if [[ "$chdman_ver" == "$opt_chdman4" ]]; then
-        (chdman4 -createcd "$batch_tochd_file" "$final_batch_tochd_output" | zenity --progress --pulsate --auto-kill --width="500"  --auto-close --title="Converting $batch_tochd_file_basename_no_ext to chd" --text="
-Creating: $batch_tochd_file_basename_no_ext.chd")
+        (chdman4 -createcd "$batch_tochd_file" "$final_batch_tochd_output" | zenity --progress --pulsate --auto-kill --width="500"  --auto-close --title="Converting $batch_tochd_file_basename_no_ext to chd" --text="Creating: $batch_tochd_file_basename_no_ext.chd")
 
         # Cancel conversion, and delete incomplete file if cancel is pressed.
         if [[ "$?" != 0 ]]; then
