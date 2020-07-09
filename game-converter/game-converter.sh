@@ -137,7 +137,7 @@ single_chdtogdi () {
   single_chdtogdi_input_basename_no_ext=${single_chdtogdi_input_basename%.*}
 
   # Continue to select file output directory if valid filetype (chd) creating "single_chdtogdi_output" and run the rest, or go to "else" in function 
-  if [[ $single_chdtogdi_input_basename == *.chd ]]; then 
+  if [[ "$single_chdtogdi_input_basename" == *.chd ]]; then 
     single_chdtogdi_output=$(zenity --file-selection --directory --filename="Desktop" --title="Where do you want to save it? Folder will be created automatically.")
   
     # Exits if user hits cancel button
@@ -190,7 +190,7 @@ single_chdtocue () {
   single_chdtocue_input_basename_no_ext=${single_chdtocue_input_basename%.*}
 
   # Continue to select file output directory if valid filetype (chd) creating "$single_chdtocue_output" and run the rest, or go to "else" in function 
-  if [[ $single_chdtocue_input_basename == *.chd ]]; then
+  if [[ "$single_chdtocue_input_basename" == *.chd ]]; then
     single_chdtocue_output=$(zenity --file-selection  --directory --filename="Desktop" --title="Where do you want to save it? Folder will be created automatically.")
 
     if [[ "$?" != 0 ]]; then
