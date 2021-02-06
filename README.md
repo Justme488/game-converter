@@ -1,4 +1,4 @@
-### (HELP WANTED)
+### (HELP WANTED)&nbsp; &nbsp; &nbsp; Contact me @ Discord - justme488#6127 for more info)
 
 
 ## Shell script GUI single or batch game format converter for chdman and ciso.
