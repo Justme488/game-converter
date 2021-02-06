@@ -1,3 +1,6 @@
+### (HELP WANTED)
+
+
 ## Shell script GUI single or batch game format converter for chdman and ciso.
 ### Features:
 * single or batch convert cue, gdi, or toc to chd (option of chdman v4 or v5)
