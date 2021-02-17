@@ -1,6 +1,3 @@
-### (HELP WANTED&nbsp; &nbsp; &nbsp; Contact me @ Discord - justme488#6127 for more info)
-
-
 ## Shell script GUI single or batch game format converter for chdman and ciso.
 ### Features:
 * single or batch convert cue, gdi, or toc to chd (option of chdman v4 or v5)
@@ -18,4 +15,5 @@
 ### [Screenshots](https://github.com/Justme488/game-converter/wiki/Screenshots)
 </br>
 </br>
-Pull requests are always welcome.
+Pull requests are always welcome. </br>
+You can contact me @ Discord - justme488#6127
