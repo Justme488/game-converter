@@ -13,6 +13,8 @@
 ### [Wiki](https://github.com/Justme488/game-converter/wiki)
 
 ### [Screenshots](https://github.com/Justme488/game-converter/wiki/Screenshots)
+
+### [To Do List](https://github.com/Justme488/game-converter/wiki/To-Do-list)
 </br>
 </br>
 Pull requests are always welcome. </br></br>
