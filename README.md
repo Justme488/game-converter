@@ -8,7 +8,7 @@
 * Will not overwrite files or folders, if they already exist
 * Will delete incomplete file if you start a conversion, and cancel before it's finished.
 
-### [Download the .deb package](https://github.com/Justme488/game-converter/raw/master/game-converter.deb)
+### [Download .deb package](https://github.com/Justme488/game-converter/raw/master/game-converter.deb)
 
 ### [Wiki](https://github.com/Justme488/game-converter/wiki)
 
