@@ -1,0 +1,10 @@
+Package: game-converter
+Version: 1.0
+Architecture: amd64
+Installed-Size: 4104
+Maintainer: justme488 <justme488@gmail.com>
+Homepage: https://github.com/Justme488/game-converter
+Priority: optional
+Depends: ciso, libsdl1.2debian, zenity
+Description: Game Converter - GUI for chdman and ciso
+ Single or batch game format converter. Convert chd, cue, gdi, toc, iso, and cso
