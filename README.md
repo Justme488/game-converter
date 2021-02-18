@@ -13,6 +13,7 @@
 ### [Screenshots](https://github.com/Justme488/game-converter/wiki/Screenshots)
 
 ### [To Do List](https://github.com/Justme488/game-converter/wiki/To-Do-list)
+If you tried game-converter on a distro other than Linux Mint, Please give some feedback [Here](https://github.com/Justme488/game-converter/discussions/5)
 </br>
 </br>
 Pull requests are always welcome. </br></br>
