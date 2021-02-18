@@ -6,7 +6,8 @@
 * Single or batch convert iso to cso (with compression options)
 * Single or batch convert cso to iso
 * Will not overwrite files or folders, if they already exist
-* Will delete incomplete file if you start a conversion, and cancel before it's finished.
+* Will delete incomplete file if you start a conversion, and cancel before it's finished
+* Creates a shortcut in your menu (Accessories > Game Converter)
 
 ### [Wiki](https://github.com/Justme488/game-converter/wiki)
 
