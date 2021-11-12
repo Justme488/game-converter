@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Encoding=UTF-8
+Name=Game Converter
+Comment=Game Converter
+Exec=/usr/share/game-converter/game-converter.sh
+Icon=/usr/share/game-converter/game-converter.png
+Terminal=False
+Categories=Utility
